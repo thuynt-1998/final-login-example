@@ -16,7 +16,7 @@ function HomeScreen(props) {
     return state.token.user;
   });
   const dispatch = useDispatch();
-  const onLogout = () => dispatch(Creators.logout());
+  const onLogout = () => dispatch(Creators.reset());
   function onClicklogout() {
     onLogout();
   }
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   buttonLogout: {
     backgroundColor: "rgb(99,177,28)",

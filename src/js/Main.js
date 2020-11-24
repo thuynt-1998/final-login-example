@@ -11,6 +11,10 @@ function Main(props) {
   const isLogin = useSelector((state) => {
     return state.token.authenticated ? true : false;
   });
+  const isLogin2 = useSelector((state) => {
+    return state;
+  });
+  console.log(isLogin2);
   useEffect(() => {
     const isLogin1 = LoginServices.getItem();
     console.log(isLogin1);

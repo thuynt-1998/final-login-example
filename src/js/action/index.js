@@ -4,7 +4,7 @@ export const { Types, Creators } = createActions(
   {
     loginRequest: ["username", "password"],
     login: null,
-    logout: null,
+    reset: null,
     loginSuccess: ["token"],
     loginFailed: ["error"],
   },

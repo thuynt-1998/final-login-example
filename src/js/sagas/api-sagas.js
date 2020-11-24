@@ -20,7 +20,6 @@ function* authorize(username, password) {
     username,
     password
   );
-  console.log(status);
   if (originalError) {
     yield put(Creators.loginFailed({ error: originalError.message, status }));
   } else {
@@ -34,14 +33,10 @@ function* loginFlow() {
   while (true) {
     const { username, password } = yield take(Types.LOGIN_REQUEST);
     const task = yield fork(authorize, username, password);
-    // console.log(token);
-    // if (token) {
-    // yield call(Api.setItem, token);
-    const action = yield take([Types.LOGOUT, Types.LOGIN_FAILED]);
-    if (action.type === Types.LOGOUT) {
+    const action = yield take([Types.RESET, Types.LOGIN_FAILED]);
+    if (action.type === Types.RESET) {
       yield cancel(task);
     }
     yield call(Api.getItem);
-    // }
   }
 }

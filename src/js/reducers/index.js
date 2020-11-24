@@ -1,4 +1,4 @@
-import { createReducer } from "reduxsauce";
+import { createReducer, resettableReducer } from "reduxsauce";
 import { Types } from "../action";
 
 const initialState = {
@@ -7,18 +7,21 @@ const initialState = {
 };
 
 export const loginSuccess = (state = initialState, action) => {
-  return { ...state, errorMessage: "", token: action.token };
+  initialState.errorMessage = "";
+  initialState.token = action.token;
+  // return { ...state, errorMessage: "", token: action.token };
 };
 export const loginFailed = (state = initialState, action) => {
-  return { ...state, token: "", errorMessage: action.error };
+  initialState.errorMessage = action.error;
+  initialState.token = "";
+  // return { ...state, token: "", errorMessage: action.error };
 };
-export const logout = (state = initialState) => {
-  return { ...state, errorMessage: "", token: {} };
-};
+
+const resettable = resettableReducer("RESET");
+
 const HANDLERS = {
   [Types.LOGIN_SUCCESS]: loginSuccess,
   [Types.LOGIN_FAILED]: loginFailed,
-  [Types.LOGOUT]: logout,
 };
 
-export default createReducer(initialState, HANDLERS);
+export default resettable(createReducer(initialState, HANDLERS));

@@ -36,16 +36,11 @@ function LoginScreen(props) {
     ) {
       setLabel("");
       onLoginRequest(username.value, password.value);
-      if (errorMessage.status === null) {
-        setLabel("Lỗi mạng");
-      } else if (errorMessage.status === 401) {
-        setLabel("Tên tài khoản hoặc mật khẩu chưa đúng!");
-      }
     } else {
       setLabel("Tên tài khoản hoặc mật khẩu chưa đúng!");
     }
   }
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="white"></StatusBar>
