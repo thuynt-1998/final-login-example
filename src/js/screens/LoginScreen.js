@@ -1,0 +1,103 @@
+import React, { useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import Creators from "../action";
+import TextInput from "./components/TextInput";
+import { styles } from "./Style";
+
+function LoginScreen(props) {
+  const [username, setUsername] = useState({ value: "", errorMessage: "" });
+  const [password, setPassword] = useState({ value: "", errorMessage: "" });
+  const [label, setLabel] = useState("");
+  const dispatch = useDispatch();
+  const onLoginRequest = (username, password) =>
+    dispatch(Creators.loginRequest(username, password));
+  const onLogin = () => dispatch(Creators.login());
+  useEffect(() => {
+    onLogin();
+  }, []);
+  const errorMessage = useSelector((state) => {
+    return state.errorMessage;
+  });
+  console.log(errorMessage);
+  function onClickLogin() {
+    if (
+      username.errorMessage === "" &&
+      password.errorMessage === "" &&
+      username.value !== "" &&
+      password.value !== ""
+    ) {
+      setLabel("");
+      onLoginRequest(username.value, password.value);
+      if (errorMessage.status === null) {
+        setLabel("Lỗi mạng");
+      } else if (errorMessage.status === 401) {
+        setLabel("Tên tài khoản hoặc mật khẩu chưa đúng!");
+      }
+    } else {
+      setLabel("Tên tài khoản hoặc mật khẩu chưa đúng!");
+    }
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor="white"></StatusBar>
+      <Text style={styles.errorInput}> {label}</Text>
+      <TextInput
+        style={styles}
+        label="Tài khoản"
+        placeholder="Tên tài khoản"
+        onChangeText={(text) => setUsername({ ...username, value: text })}
+        onBlur={() => {
+          if (username.value === "") {
+            setUsername({
+              ...username,
+              errorMessage: "Tên tài khoản không được để trống",
+            });
+          } else {
+            setUsername({
+              ...username,
+              errorMessage: "",
+            });
+          }
+        }}
+        value={username.value}
+        error={username.errorMessage}
+      />
+      <TextInput
+        style={styles}
+        label="Mật khẩu"
+        secureTextEntry
+        value={password.value}
+        error={password.errorMessage}
+        onChangeText={(text) => setPassword({ ...password, value: text })}
+        onBlur={() => {
+          if (password.value === "") {
+            setPassword({
+              ...password,
+              errorMessage: "Mật khẩu không được để trống",
+            });
+          } else {
+            setPassword({
+              ...password,
+              errorMessage: "",
+            });
+          }
+        }}
+        placeholder="Mật khẩu"
+      />
+
+      <TouchableOpacity style={styles.button} onPress={onClickLogin}>
+        <Text style={styles.textButton}> Đăng nhập</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+}
+export default LoginScreen;
