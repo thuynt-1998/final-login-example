@@ -34,9 +34,6 @@ function HomeScreen(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ flex: 3 }}>
-        <Text>Xin chào {username}</Text>
-      </View>
     </SafeAreaView>
   );
 }

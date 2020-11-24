@@ -23,7 +23,6 @@ function* authorize(username, password) {
   if (originalError) {
     yield put(Creators.loginFailed({ error: originalError.message, status }));
   } else {
-    console.log(data);
     yield put(Creators.loginSuccess(data));
     yield call(Api.setItem, data);
     return data;

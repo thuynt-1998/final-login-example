@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  StatusBar,
-} from "react-native";
+import { Text, View, TouchableOpacity, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import Creators from "../action";
@@ -23,10 +17,6 @@ function LoginScreen(props) {
   useEffect(() => {
     onLogin();
   }, []);
-  const errorMessage = useSelector((state) => {
-    return state.errorMessage;
-  });
-  console.log(errorMessage);
   function onClickLogin() {
     if (
       username.errorMessage === "" &&
@@ -40,58 +30,60 @@ function LoginScreen(props) {
       setLabel("Tên tài khoản hoặc mật khẩu chưa đúng!");
     }
   }
-  
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="white"></StatusBar>
-      <Text style={styles.errorInput}> {label}</Text>
-      <TextInput
-        style={styles}
-        label="Tài khoản"
-        placeholder="Tên tài khoản"
-        onChangeText={(text) => setUsername({ ...username, value: text })}
-        onBlur={() => {
-          if (username.value === "") {
-            setUsername({
-              ...username,
-              errorMessage: "Tên tài khoản không được để trống",
-            });
-          } else {
-            setUsername({
-              ...username,
-              errorMessage: "",
-            });
-          }
-        }}
-        value={username.value}
-        error={username.errorMessage}
-      />
-      <TextInput
-        style={styles}
-        label="Mật khẩu"
-        secureTextEntry
-        value={password.value}
-        error={password.errorMessage}
-        onChangeText={(text) => setPassword({ ...password, value: text })}
-        onBlur={() => {
-          if (password.value === "") {
-            setPassword({
-              ...password,
-              errorMessage: "Mật khẩu không được để trống",
-            });
-          } else {
-            setPassword({
-              ...password,
-              errorMessage: "",
-            });
-          }
-        }}
-        placeholder="Mật khẩu"
-      />
+      <View>
+        <StatusBar backgroundColor="white"></StatusBar>
+        <Text style={styles.errorInput}> {label}</Text>
+        <TextInput
+          style={styles}
+          label="Tài khoản"
+          placeholder="Tên tài khoản"
+          onChangeText={(text) => setUsername({ ...username, value: text })}
+          onBlur={() => {
+            if (username.value === "") {
+              setUsername({
+                ...username,
+                errorMessage: "Tên tài khoản không được để trống",
+              });
+            } else {
+              setUsername({
+                ...username,
+                errorMessage: "",
+              });
+            }
+          }}
+          value={username.value}
+          error={username.errorMessage}
+        />
+        <TextInput
+          style={styles}
+          label="Mật khẩu"
+          secureTextEntry
+          value={password.value}
+          error={password.errorMessage}
+          onChangeText={(text) => setPassword({ ...password, value: text })}
+          onBlur={() => {
+            if (password.value === "") {
+              setPassword({
+                ...password,
+                errorMessage: "Mật khẩu không được để trống",
+              });
+            } else {
+              setPassword({
+                ...password,
+                errorMessage: "",
+              });
+            }
+          }}
+          placeholder="Mật khẩu"
+        />
 
-      <TouchableOpacity style={styles.button} onPress={onClickLogin}>
-        <Text style={styles.textButton}> Đăng nhập</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={onClickLogin}>
+          <Text style={styles.textButton}> Đăng nhập</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
