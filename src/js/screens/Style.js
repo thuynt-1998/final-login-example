@@ -9,14 +9,14 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   textInputSuccess: {
-    borderBottomColor: "rgb(123,97,193)",
+    borderBottomColor: "black",
   },
   textInputError: {
     borderBottomColor: "red",
   },
   button: {
     marginTop: 20,
-    backgroundColor: "blue",
+    backgroundColor: "rgb(99,177,28)",
     borderRadius: 10,
   },
   textButton: {
