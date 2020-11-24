@@ -34,7 +34,7 @@ function HomeScreen(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ flex: 3, backgroundColor: "pink" }}>
+      <View style={{ flex: 3 }}>
         <Text>Xin chào {username}</Text>
       </View>
     </SafeAreaView>
@@ -50,10 +50,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   buttonLogout: {
-    backgroundColor: "blue",
+    backgroundColor: "rgb(99,177,28)",
     width: 90,
     borderRadius: 10,
     height: 40,
+    borderColor: "white",
+    borderWidth: 1,
   },
   textButtonLogout: {
     color: "white",
