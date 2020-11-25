@@ -25,4 +25,8 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     marginVertical: 5,
   },
+  loading: {
+    flex: 1,
+    marginTop: 30,
+  },
 });

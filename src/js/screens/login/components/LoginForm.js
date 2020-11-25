@@ -12,6 +12,7 @@ import { styles } from "../Login.style";
 function LoginForm(props) {
   const { register, handleSubmit, setValue, errors } = useForm();
   const { setIsLogin, onLoginRequest } = props;
+
   useEffect(() => {
     register("username", { required: true });
     register("password", { required: true });

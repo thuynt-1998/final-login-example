@@ -16,9 +16,9 @@ function HomeScreen(props) {
     <SafeAreaView>
       <StatusBar backgroundColor="rgb(99,177,28)"></StatusBar>
       <View style={styles.containerTop}>
-        <View style={{ flexDirection: "row" }}>
+        <View style={styles.flexRow}>
           <FontAwesome name="user-circle-o" size={34} color="white" />
-          <Text style={{ color: "white", fontSize: 20 }}> {username}</Text>
+          <Text style={styles.textUser}> {username}</Text>
         </View>
         <View>
           <TouchableOpacity onPress={onLogout} style={styles.buttonLogout}>

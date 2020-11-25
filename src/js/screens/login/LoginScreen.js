@@ -15,6 +15,7 @@ function LoginScreen(props) {
   useEffect(() => {
     onLogin();
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <LoginForm
@@ -22,12 +23,7 @@ function LoginScreen(props) {
         setIsLogin={setIsLogin}
       ></LoginForm>
       {isLogin && (
-        <View
-          style={{
-            flex: 1,
-            marginTop: 30,
-          }}
-        >
+        <View style={styles.loading}>
           <ActivityIndicator color="primary" size="small" />
         </View>
       )}

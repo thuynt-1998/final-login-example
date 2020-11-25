@@ -15,9 +15,13 @@ export default function* watcherLoginSaga() {
 }
 
 function* authorize(username, password) {
-  const { originalError, data } = yield call(Api.author, username, password);
+  const { originalError, data, status } = yield call(
+    Api.author,
+    username,
+    password
+  );
   if (originalError) {
-    yield put(Creators.loginFailed(originalError.message));
+    yield put(Creators.loginFailed({ error: originalError.message, status }));
   } else {
     yield put(Creators.loginSuccess(data));
     yield call(Api.setItem, data.authenticated);

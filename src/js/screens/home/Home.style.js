@@ -22,4 +22,6 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     paddingVertical: 10,
   },
+  flexRow: { flexDirection: "row" },
+  textUser: { color: "white", fontSize: 20 },
 });
