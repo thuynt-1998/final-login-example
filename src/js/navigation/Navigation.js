@@ -1,17 +1,16 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "./screens/HomeScreen";
-import LoginScreen from "./screens/LoginScreen";
 import { useSelector } from "react-redux";
+import HomeScreen from "../screens/home/HomeScreen";
+import LoginScreen from "../screens/login/LoginScreen";
 
 const Stack = createStackNavigator();
 
-function Main(props) {
+function Navigation(props) {
   const isLogin = useSelector((state) => {
-    return state.token!=="" ? true : false;
+    return state.token !== "" ? true : false;
   });
 
- 
   return (
     <Stack.Navigator initialRouteName="login">
       {isLogin ? (
@@ -37,4 +36,4 @@ function Main(props) {
   );
 }
 
-export default Main;
+export default Navigation;
