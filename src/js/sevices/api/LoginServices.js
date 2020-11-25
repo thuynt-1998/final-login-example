@@ -12,11 +12,11 @@ function author(username, password) {
     )
     .then((res) => res);
 }
-function getItem() {
-  return AsyncStorage.getItem("token");
+function removeItem() {
+  return AsyncStorage.removeItem("token");
 }
 function setItem(token) {
-  AsyncStorage.setItem("token", token);
+  AsyncStorage.setItem("token", JSON.stringify(token));
 }
 
-export default { author, getItem, setItem };
+export default { author, removeItem, setItem };

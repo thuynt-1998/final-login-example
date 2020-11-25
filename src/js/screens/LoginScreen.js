@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, StatusBar } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StatusBar,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Creators from "../action";
 import TextInput from "./components/TextInput";
 import { styles } from "./Style";
@@ -10,6 +16,8 @@ function LoginScreen(props) {
   const [username, setUsername] = useState({ value: "", errorMessage: "" });
   const [password, setPassword] = useState({ value: "", errorMessage: "" });
   const [label, setLabel] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+
   const dispatch = useDispatch();
   const onLoginRequest = (username, password) =>
     dispatch(Creators.loginRequest(username, password));
@@ -26,6 +34,7 @@ function LoginScreen(props) {
     ) {
       setLabel("");
       onLoginRequest(username.value, password.value);
+      setIsLogin(true);
     } else {
       setLabel("Tên tài khoản hoặc mật khẩu chưa đúng!");
     }
@@ -84,6 +93,16 @@ function LoginScreen(props) {
           <Text style={styles.textButton}> Đăng nhập</Text>
         </TouchableOpacity>
       </View>
+      {isLogin && (
+        <View
+          style={{
+            flex: 1,
+            marginTop: 30,
+          }}
+        >
+          <ActivityIndicator color="primary" size="small" />
+        </View>
+      )}
     </SafeAreaView>
   );
 }

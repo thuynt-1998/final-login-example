@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import Creators from "../action";
 import { FontAwesome } from "@expo/vector-icons";
+import { styles } from "./Style";
 
 function HomeScreen(props) {
   const username = useSelector((state) => {
@@ -21,7 +22,7 @@ function HomeScreen(props) {
     onLogout();
   }
   return (
-    <SafeAreaView style={{}}>
+    <SafeAreaView>
       <StatusBar backgroundColor="rgb(99,177,28)"></StatusBar>
       <View style={styles.containerTop}>
         <View style={{ flexDirection: "row" }}>
@@ -37,27 +38,4 @@ function HomeScreen(props) {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  containerTop: {
-    height: 100,
-    backgroundColor: "rgb(99,177,28)",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  buttonLogout: {
-    backgroundColor: "rgb(99,177,28)",
-    width: 90,
-    borderRadius: 10,
-    height: 40,
-    borderColor: "white",
-    borderWidth: 1,
-  },
-  textButtonLogout: {
-    color: "white",
-    textAlign: "center",
-    paddingVertical: 10,
-  },
-});
 export default HomeScreen;

@@ -7,14 +7,10 @@ const initialState = {
 };
 
 export const loginSuccess = (state = initialState, action) => {
-  // initialState.errorMessage = "";
-  // initialState.token = action.token;
-  return { ...state, errorMessage: "", token: action.token };
+  return { errorMessage: "", token: action.token };
 };
 export const loginFailed = (state = initialState, action) => {
-  // initialState.errorMessage = action.error;
-  // initialState.token = "";
-  return { ...state, token: "", errorMessage: action.error };
+  return { token: "", errorMessage: action.error };
 };
 
 const resettable = resettableReducer("RESET");

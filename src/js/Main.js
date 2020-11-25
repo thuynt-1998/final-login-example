@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import { useSelector } from "react-redux";
-import LoginServices from "./sevices/api/LoginServices";
 
 const Stack = createStackNavigator();
 
 function Main(props) {
   const isLogin = useSelector((state) => {
-    return state.token.authenticated ? true : false;
+    return state.token!=="" ? true : false;
   });
 
  
