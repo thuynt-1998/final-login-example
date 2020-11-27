@@ -1,17 +1,9 @@
-import {
-  call,
-  all,
-  take,
-  put,
-  takeEvery,
-  fork,
-  cancel,
-} from "redux-saga/effects";
+import { call, take, put, fork, cancel, takeLatest } from "redux-saga/effects";
 import Creators, { Types } from "../action";
 import Api from "../sevices/api/LoginServices";
 
 export default function* watcherLoginSaga() {
-  yield takeEvery(Types.LOGIN, loginFlow);
+  yield takeLatest(Types.LOGIN, loginFlow);
 }
 
 function* authorize(username, password) {

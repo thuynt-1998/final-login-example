@@ -10,15 +10,22 @@ export const styles = StyleSheet.create({
   textInputSuccess: {
     borderBottomColor: "black",
   },
-  button: {
-    marginTop: 20,
-    backgroundColor: "rgb(99,177,28)",
-    borderRadius: 10,
+
+  button: (isLogin) => {
+    return {
+      marginTop: 20,
+      backgroundColor: isLogin ? "rgba(200,200,200,0.5)" : "rgb(99,177,28)",
+      borderRadius: 10,
+      textAlign: "center",
+    };
   },
-  textButton: {
-    textAlign: "center",
-    color: "white",
-    paddingVertical: 10,
+  textButton: (isLogin) => {
+    return {
+      textAlign: "center",
+      color: isLogin ? "rgba(0,0,0,0.5)" : "white",
+      paddingVertical: 10,
+      textTransform: "uppercase",
+    };
   },
   errorInput: {
     color: "red",
@@ -26,7 +33,7 @@ export const styles = StyleSheet.create({
     marginVertical: 5,
   },
   loading: {
-    flex: 1,
+    height: 20,
     marginTop: 30,
   },
 });

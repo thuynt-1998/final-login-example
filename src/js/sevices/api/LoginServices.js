@@ -7,7 +7,7 @@ function author(username, password) {
       `basic-auth/${username}/${password}`,
       {},
       {
-        auth: { username: "thuy", password: "123" },
+        auth: { username: "thuy", password: "1234567" },
       }
     )
     .then((res) => res);

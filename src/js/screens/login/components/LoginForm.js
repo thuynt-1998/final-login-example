@@ -1,24 +1,31 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Text,
   View,
   TouchableOpacity,
   StatusBar,
   TextInput,
+  ActivityIndicator,
+  Keyboard,
 } from "react-native";
 import { useForm } from "react-hook-form";
 import { styles } from "../Login.style";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { valid } from "../LoginForm.valid";
 
 function LoginForm(props) {
-  const { register, handleSubmit, setValue, errors } = useForm();
-  const { setIsLogin, onLoginRequest } = props;
-
+  const { register, handleSubmit, setValue, errors } = useForm({
+    resolver: yupResolver(valid),
+  });
+  const { onLoginRequest } = props;
+  const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
-    register("username", { required: true });
-    register("password", { required: true });
+    register("username");
+    register("password");
   }, [register]);
   const onClickLogin = useCallback((data) => {
     onLoginRequest(data.username, data.password);
+    Keyboard.dismiss();
     setIsLogin(true);
   }, []);
   return (
@@ -33,8 +40,7 @@ function LoginForm(props) {
         }}
       />
       <Text style={styles.errorInput}>
-        {errors.username?.type === "required" &&
-          "Tên tài khoản không được rỗng"}
+        {errors.username && errors.username.message}
       </Text>
       <Text style={styles.label}>Mật khẩu</Text>
       <TextInput
@@ -46,14 +52,23 @@ function LoginForm(props) {
         secureTextEntry
       />
       <Text style={styles.errorInput}>
-        {errors.password?.type === "required" && "Mật khẩu không được rỗng"}
+        {errors.password && errors.password.message}
       </Text>
+
       <TouchableOpacity
-        style={styles.button}
+        style={styles.button(isLogin)}
         onPress={handleSubmit(onClickLogin)}
+        disabled={isLogin}
       >
-        <Text style={styles.textButton}> Đăng nhập</Text>
+        <Text style={styles.textButton(isLogin)}> Đăng nhập</Text>
       </TouchableOpacity>
+      {isLogin && (
+        <ActivityIndicator
+          color="primary"
+          size="small"
+          style={styles.loading}
+        />
+      )}
     </View>
   );
 }
