@@ -24,7 +24,7 @@ function AddForm(props) {
     (data) => {
       Keyboard.dismiss();
       var id = idItem.length === 0 ? 0 : idItem[idItem.length - 1].id + 1;
-      dispatch(Creators.addToDo({ id: id, title: data.task }));
+      dispatch(Creators.addToDo({ id, title: data.task }));
       reset();
     },
     [idItem]

@@ -14,7 +14,6 @@ import Creators from "../../../action";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { valid } from "../ToDo.valid";
-import { HelperText } from "react-native-paper";
 
 function ToDo(props) {
   const toDo = useSelector((state) => {
@@ -57,28 +56,25 @@ function ToDo(props) {
             style={[styles.flexTwo]}
           >
             {selected === index ? (
-              <View>
-                <TextInput
-                  defaultValue={item.title}
-                  name="task"
-                  onChangeText={(text) => {
-                    setValue("task", text);
-                  }}
-                  autoFocus
-                />
-              </View>
+              <TextInput
+                defaultValue={item.title}
+                name="task"
+                onChangeText={(text) => {
+                  setValue("task", text);
+                }}
+                autoFocus
+              />
             ) : (
               <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
             )}
           </TouchableOpacity>
 
-          <View style={[styles.flexOne]}>
-            <TouchableOpacity
-              onPress={handleSubmit((data) => onSave(data, selected, item.id))}
-            >
-              <MaterialIcons name="edit" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={handleSubmit((data) => onSave(data, selected, item.id))}
+            style={[styles.flexOne]}
+          >
+            <MaterialIcons name="edit" size={24} color="black" />
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.flexOne]}
