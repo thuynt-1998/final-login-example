@@ -13,29 +13,29 @@ import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { valid } from "../ToDo.valid";
 function AddForm(props) {
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, reset, getValues } = useForm({
     resolver: yupResolver(valid),
   });
   const dispatch = useDispatch();
   const onAdd = useCallback((data) => {
     Keyboard.dismiss();
     dispatch(Creators.addToDo({ title: data.task }));
+    reset();
   }, []);
   useEffect(() => {
     register("task");
   }, [register]);
   return (
-    <View>
-      <View style={[styles.flexRow, styles.paddingOne]}>
-        <Text style={[styles.label]}>Công việc </Text>
-        <TextInput
-          style={[styles.input, styles.flexOne]}
-          name="task"
-          onChangeText={(text) => setValue("task", text)}
-        />
-      </View>
+    <View style={[styles.flexRow, styles.paddingOne, styles.containerTop]}>
+      <Text style={styles.flexOne}>Công việc </Text>
+      <TextInput
+        style={[styles.input, styles.flexThree]}
+        name="task"
+        onChangeText={(text) => setValue("task", text)}
+        value={getValues().task}
+      />
       <TouchableOpacity
-        style={[styles.buttonLogout, styles.marginOne]}
+        style={[styles.buttonLogout, styles.marginOne, styles.flexOne]}
         onPress={handleSubmit(onAdd)}
       >
         <Text style={styles.textButtonLogout}>Thêm</Text>

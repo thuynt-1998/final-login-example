@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  backgroundColor: { backgroundColor: "rgb(99,177,28)" },
   containerTop: {
     height: 100,
-    backgroundColor: "rgb(99,177,28)",
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -28,9 +28,11 @@ export const styles = StyleSheet.create({
   textUser: { color: "white", fontSize: 20 },
   flexOne: { flex: 1 },
   flexTwo: { flex: 5 },
+  flexThree: { flex: 2 },
   input: {
     height: 40,
     borderBottomWidth: 1,
+    marginRight: 20,
   },
   label: {
     paddingTop: 15,

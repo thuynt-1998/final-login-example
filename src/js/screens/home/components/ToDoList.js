@@ -14,6 +14,7 @@ import Creators from "../../../action";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { valid } from "../ToDo.valid";
+import { HelperText } from "react-native-paper";
 
 function ToDo(props) {
   const toDo = useSelector((state) => {
@@ -43,21 +44,23 @@ function ToDo(props) {
   const renderItem = useCallback(
     ({ index, item }) => {
       return (
-        <View style={[styles.flexRow, styles.alignItems, styles.paddingTwo]}>
+        <View style={[styles.flexRow, styles.paddingTwo]}>
           <Text style={styles.flexOne}>{index}</Text>
           <TouchableOpacity
             onPress={() => onEdit(index)}
             style={[styles.flexTwo]}
           >
             {selected === index ? (
-              <TextInput
-                defaultValue={item.title}
-                name="task"
-                onChangeText={(text) => {
-                  setValue("task", text);
-                }}
-                autoFocus
-              />
+              <View>
+                <TextInput
+                  defaultValue={item.title}
+                  name="task"
+                  onChangeText={(text) => {
+                    setValue("task", text);
+                  }}
+                  autoFocus
+                />
+              </View>
             ) : (
               <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
             )}
@@ -67,7 +70,7 @@ function ToDo(props) {
             <TouchableOpacity
               onPress={handleSubmit((data) => onSave(data, index))}
             >
-              <MaterialIcons name="save" size={20} color="black" />
+              <MaterialIcons name="edit" size={24} color="black" />
             </TouchableOpacity>
           </View>
 

@@ -25,7 +25,14 @@ function HomeScreen(props) {
     <SafeAreaView>
       <StatusBar backgroundColor="rgb(99,177,28)"></StatusBar>
       <View>
-        <View style={[styles.containerTop, styles.flexRow, styles.paddingOne]}>
+        <View
+          style={[
+            styles.containerTop,
+            styles.flexRow,
+            styles.paddingOne,
+            styles.backgroundColor,
+          ]}
+        >
           <View style={[styles.flexRow, styles.flexOne]}>
             <FontAwesome name="user-circle-o" size={34} color="white" />
             <Text style={styles.textUser}> {username}</Text>
