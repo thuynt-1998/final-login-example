@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   Text,
   View,
-  TouchableOpacity,
   StatusBar,
   TextInput,
   ActivityIndicator,
@@ -12,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { styles } from "../Login.style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { valid } from "../LoginForm.valid";
+import { Button } from "react-native-paper";
 
 function LoginForm(props) {
   const { register, handleSubmit, setValue, errors } = useForm({
@@ -55,13 +55,15 @@ function LoginForm(props) {
         {errors.password && errors.password.message}
       </Text>
 
-      <TouchableOpacity
-        style={styles.button(isLogin)}
-        onPress={handleSubmit(onClickLogin)}
+      <Button
+        mode="contained"
+        style={styles.button}
         disabled={isLogin}
+        onPress={handleSubmit(onClickLogin)}
       >
-        <Text style={styles.textButton(isLogin)}> Đăng nhập</Text>
-      </TouchableOpacity>
+        Đăng nhập
+      </Button>
+
       {isLogin && (
         <ActivityIndicator
           color="primary"

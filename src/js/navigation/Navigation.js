@@ -8,9 +8,8 @@ const Stack = createStackNavigator();
 
 function Navigation(props) {
   const isLogin = useSelector((state) => {
-    return state.token !== "" ? true : false;
+    return state.auth.token !== "" ? true : false;
   });
-
   return (
     <Stack.Navigator initialRouteName="login">
       {isLogin ? (

@@ -7,6 +7,9 @@ export const { Types, Creators } = createActions(
     reset: null,
     loginSuccess: ["token"],
     loginFailed: ["error"],
+    addToDo: ["task"],
+    editToDo: ["index", "task"],
+    removeToDo: ["task"],
   },
   {}
 );

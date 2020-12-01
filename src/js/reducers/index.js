@@ -1,23 +1,6 @@
-import { createReducer, resettableReducer } from "reduxsauce";
-import { Types } from "../action";
+import { combineReducers } from "redux";
+import authReducer from "./AuthReducer";
+import toDoReducer from "./ToDoReducer";
 
-const initialState = {
-  token: "",
-  errorMessage: "",
-};
-
-export const loginSuccess = (state = initialState, action) => {
-  return { errorMessage: "", token: action.token };
-};
-export const loginFailed = (state = initialState, action) => {
-  return { token: "", errorMessage: action.error };
-};
-
-const resettable = resettableReducer("RESET");
-
-const HANDLERS = {
-  [Types.LOGIN_SUCCESS]: loginSuccess,
-  [Types.LOGIN_FAILED]: loginFailed,
-};
-
-export default resettable(createReducer(initialState, HANDLERS));
+const rootReducer = combineReducers({ auth: authReducer, task: toDoReducer });
+export default rootReducer;
