@@ -9,19 +9,26 @@ import {
 import { useForm } from "react-hook-form";
 import { styles } from "../Home.style";
 import Creators from "../../../action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { valid } from "../ToDo.valid";
 function AddForm(props) {
   const { register, handleSubmit, setValue, reset, getValues } = useForm({
     resolver: yupResolver(valid),
   });
+  const idItem = useSelector((state) => {
+    return state.task.toDo;
+  });
   const dispatch = useDispatch();
-  const onAdd = useCallback((data) => {
-    Keyboard.dismiss();
-    dispatch(Creators.addToDo({ title: data.task }));
-    reset();
-  }, []);
+  const onAdd = useCallback(
+    (data) => {
+      Keyboard.dismiss();
+      var id = idItem.length === 0 ? 0 : idItem[idItem.length - 1].id + 1;
+      dispatch(Creators.addToDo({ id: id, title: data.task }));
+      reset();
+    },
+    [idItem]
+  );
   useEffect(() => {
     register("task");
   }, [register]);

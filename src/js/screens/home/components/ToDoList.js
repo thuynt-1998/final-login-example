@@ -22,16 +22,22 @@ function ToDo(props) {
   });
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(-1);
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, reset } = useForm({
     resolver: yupResolver(valid),
   });
-  const onSave = useCallback((data, index) => {
-    Keyboard.dismiss();
-    dispatch(Creators.editToDo(index, { title: data.task }));
-    setSelected(-1);
-  }, []);
+  const onSave = useCallback(
+    (data, index, id) => {
+      Keyboard.dismiss();
+      if (id === toDo[index].id)
+        dispatch(Creators.editToDo(index, { id: id, title: data.task }));
+      setSelected(-1);
+      reset();
+    },
+    [toDo]
+  );
   const onEdit = useCallback((index) => {
     setSelected(index);
+    reset();
   }, []);
   const onRemove = useCallback((item) => {
     Keyboard.dismiss();
@@ -68,7 +74,7 @@ function ToDo(props) {
 
           <View style={[styles.flexOne]}>
             <TouchableOpacity
-              onPress={handleSubmit((data) => onSave(data, index))}
+              onPress={handleSubmit((data) => onSave(data, selected, item.id))}
             >
               <MaterialIcons name="edit" size={24} color="black" />
             </TouchableOpacity>
@@ -88,7 +94,7 @@ function ToDo(props) {
   return (
     <FlatList
       data={toDo}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
       style={styles.paddingOne}
       extraData={selected}
