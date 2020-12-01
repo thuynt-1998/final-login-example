@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
-  KeyboardAvoidingView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { styles } from "../Home.style";
@@ -26,47 +25,50 @@ function ToDo(props) {
     resolver: yupResolver(valid),
   });
   const onSave = useCallback((data, index) => {
-    dispatch(Creators.editToDo(index, { title: data.task }));
     Keyboard.dismiss();
+    dispatch(Creators.editToDo(index, { title: data.task }));
     setSelected(-1);
   }, []);
-  const onEdit = useCallback((index) => setSelected(index), []);
+  const onEdit = useCallback((index) => {
+    setSelected(index);
+  }, []);
   const onRemove = useCallback((item) => {
+    Keyboard.dismiss();
     dispatch(Creators.removeToDo(item));
     setSelected(-1);
   }, []);
   useEffect(() => {
     register("task");
-  }, []);
+  }, [register]);
   const renderItem = useCallback(
     ({ index, item }) => {
       return (
         <View style={[styles.flexRow, styles.alignItems, styles.paddingTwo]}>
           <Text style={styles.flexOne}>{index}</Text>
-          {selected === index ? (
-            <TextInput
-              style={[styles.flexTwo, styles.color]}
-              defaultValue={item.title}
-              name="task"
-              onChangeText={(text) => {
-                setValue("task", text);
-              }}
-            />
-          ) : (
-            <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
-          )}
-          <View style={[styles.flexOne]}>
+          <TouchableOpacity
+            onPress={() => onEdit(index)}
+            style={[styles.flexTwo]}
+          >
             {selected === index ? (
-              <TouchableOpacity
-                onPress={handleSubmit((data) => onSave(data, index))}
-              >
-                <MaterialIcons name="save" size={20} color="black" />
-              </TouchableOpacity>
+              <TextInput
+                defaultValue={item.title}
+                name="task"
+                onChangeText={(text) => {
+                  setValue("task", text);
+                }}
+                autoFocus
+              />
             ) : (
-              <TouchableOpacity onPress={() => onEdit(index)}>
-                <MaterialIcons name="edit" size={20} color="black" />
-              </TouchableOpacity>
+              <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
             )}
+          </TouchableOpacity>
+
+          <View style={[styles.flexOne]}>
+            <TouchableOpacity
+              onPress={handleSubmit((data) => onSave(data, index))}
+            >
+              <MaterialIcons name="save" size={20} color="black" />
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
