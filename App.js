@@ -5,6 +5,12 @@ import { Provider } from "react-redux";
 import store from "./src/js/store/index";
 import { decode, encode } from "base-64";
 import Navigation from "./src/js/navigation/Navigation";
+import {
+  configureFonts,
+  DefaultTheme,
+  Provider as PaperProvider,
+} from "react-native-paper";
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -16,11 +22,13 @@ if (!global.atob) {
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Navigation />
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <PaperProvider>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Navigation />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </PaperProvider>
     </Provider>
   );
 }

@@ -19,6 +19,7 @@ function Navigation(props) {
           options={{
             title: "Trang chủ",
             headerShown: false,
+            headerTransparent: true,
           }}
         ></Stack.Screen>
       ) : (
@@ -28,6 +29,8 @@ function Navigation(props) {
           options={{
             title: "Đăng nhập",
             headerTitleStyle: { textAlign: "center", color: "black" },
+            headerShown: false,
+            headerTransparent: true,
           }}
         ></Stack.Screen>
       )}

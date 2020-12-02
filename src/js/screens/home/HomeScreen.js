@@ -23,7 +23,7 @@ function HomeScreen(props) {
 
   return (
     <SafeAreaView>
-      <StatusBar backgroundColor="rgb(99,177,28)"></StatusBar>
+      <StatusBar backgroundColor="rgb(99,177,28)" translucent></StatusBar>
       <View>
         <View
           style={[
