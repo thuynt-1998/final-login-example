@@ -63,6 +63,7 @@ function ToDo(props) {
                   setValue("task", text);
                 }}
                 autoFocus
+                multiline
               />
             ) : (
               <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>

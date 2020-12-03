@@ -40,6 +40,7 @@ function AddForm(props) {
         name="task"
         onChangeText={(text) => setValue("task", text)}
         value={getValues().task}
+        multiline
       />
       <TouchableOpacity
         style={[styles.buttonLogout, styles.marginOne, styles.flexOne]}
