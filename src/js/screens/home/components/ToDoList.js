@@ -68,13 +68,14 @@ function ToDo(props) {
               <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
             )}
           </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={handleSubmit((data) => onSave(data, selected, item.id))}
-            style={[styles.flexOne]}
-          >
-            <MaterialIcons name="edit" size={24} color="black" />
-          </TouchableOpacity>
+          {selected === index && (
+            <TouchableOpacity
+              onPress={handleSubmit((data) => onSave(data, selected, item.id))}
+              style={[styles.flexOne]}
+            >
+              <MaterialIcons name="edit" size={24} color="black" />
+            </TouchableOpacity>
+          )}
 
           <TouchableOpacity
             style={[styles.flexOne]}

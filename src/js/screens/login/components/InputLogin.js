@@ -12,11 +12,10 @@ const theme = {
   },
 };
 function InputLogin(props) {
-  const { label, setValue, errors, title, left } = props;
+  const { label, setValue, errors, title, left, secureTextEntry } = props;
   return (
     <View>
       <TextInput
-        // label={title}
         name={label}
         style={[styles.textInput, styles.textInputSuccess]}
         onChangeText={(text) => {
@@ -32,6 +31,7 @@ function InputLogin(props) {
         )}
         underlineColor="rgb(179,189,197)"
         placeholder={title}
+        secureTextEntry={secureTextEntry}
       />
       <HelperText style={styles.errorInput}>
         {errors && errors.message}

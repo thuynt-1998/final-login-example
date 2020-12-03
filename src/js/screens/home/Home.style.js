@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   textUser: { color: "white", fontSize: 20 },
   flexOne: { flex: 1 },
   flexTwo: { flex: 5 },
-  flexThree: { flex: 2 },
+  flexThree: { flex: 4 },
   input: {
     height: 40,
     borderBottomWidth: 1,

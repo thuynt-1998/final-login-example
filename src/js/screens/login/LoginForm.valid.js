@@ -1,9 +1,12 @@
 import * as yup from "yup";
 
 export const valid = yup.object().shape({
-  username: yup.string().required("Tên tài khoản không được để trống"),
+  username: yup
+    .string()
+    .required("Email is not empty")
+    .email("Incorrect email format"),
   password: yup
     .string()
-    .required("Mật khẩu không được để trống")
-    .min(6, "Mật khẩu phải dài hơn 6 kí tự"),
+    .required("Password is not empty")
+    .min(6, "Password longer than 6 characters"),
 });

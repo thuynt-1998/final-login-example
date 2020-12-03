@@ -34,7 +34,7 @@ function AddForm(props) {
   }, [register]);
   return (
     <View style={[styles.flexRow, styles.paddingOne, styles.containerTop]}>
-      <Text style={styles.flexOne}>Công việc </Text>
+      <Text style={styles.flexOne}>Task</Text>
       <TextInput
         style={[styles.input, styles.flexThree]}
         name="task"
@@ -45,7 +45,7 @@ function AddForm(props) {
         style={[styles.buttonLogout, styles.marginOne, styles.flexOne]}
         onPress={handleSubmit(onAdd)}
       >
-        <Text style={styles.textButtonLogout}>Thêm</Text>
+        <Text style={styles.textButtonLogout}>Add</Text>
       </TouchableOpacity>
     </View>
   );

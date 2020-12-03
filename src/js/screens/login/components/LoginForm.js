@@ -49,6 +49,7 @@ function LoginForm(props) {
           left={() => (
             <Fontisto name="email" size={20} color="rgb(179,189,197)" />
           )}
+          secureTextEntry={false}
         />
         <InputLogin
           label="password"
@@ -64,6 +65,7 @@ function LoginForm(props) {
               />
             );
           }}
+          secureTextEntry={true}
         />
 
         <Button

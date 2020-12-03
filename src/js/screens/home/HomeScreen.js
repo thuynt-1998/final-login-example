@@ -39,7 +39,7 @@ function HomeScreen(props) {
           </View>
           <View>
             <TouchableOpacity onPress={onLogout} style={styles.buttonLogout}>
-              <Text style={styles.textButtonLogout}> Đăng xuất</Text>
+              <Text style={styles.textButtonLogout}> Logout</Text>
             </TouchableOpacity>
           </View>
         </View>
