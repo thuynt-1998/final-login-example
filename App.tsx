@@ -6,10 +6,13 @@ import store from "./src/js/store/index";
 import { decode, encode } from "base-64";
 import Navigation from "./src/js/navigation/Navigation";
 import {
-  configureFonts,
-  DefaultTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
+
+declare const global: {
+  btoa: any;
+  atob: any
+}
 
 if (!global.btoa) {
   global.btoa = encode;

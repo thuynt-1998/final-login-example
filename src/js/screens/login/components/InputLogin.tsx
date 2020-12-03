@@ -1,7 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { View, Text, TextInput as TextInputRender } from "react-native";
 import { DefaultTheme, HelperText, TextInput } from "react-native-paper";
+
 import { styles } from "../Login.style";
+
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -11,33 +13,41 @@ const theme = {
     placeholder: "rgb(179,189,197)",
   },
 };
-function InputLogin(props) {
-  const { label, setValue, errors, title, left, secureTextEntry } = props;
+
+interface PropsGlobal {
+  label: string;
+  onValue: (label: string, text: string) => any;
+  errors: { message: string };
+  title: string;
+  left: () => any
+  secureTextEntry: boolean;
+}
+
+const InputLogin = (props: PropsGlobal) => {
+  const { label, onValue, errors, title, left, secureTextEntry } = props;
+
   return (
     <View>
       <TextInput
-        name={label}
         style={[styles.textInput, styles.textInputSuccess]}
-        onChangeText={(text) => {
-          setValue(label, text);
-        }}
+        onChangeText={(text) => onValue(label, text)}
         theme={theme}
         left={<TextInput.Icon name={left} />}
         render={(props) => (
           <TextInputRender
             {...props}
-            style={[styles.textInput, styles.textInputSucces]}
+            style={[styles.textInput]}
           />
         )}
         underlineColor="rgb(179,189,197)"
         placeholder={title}
         secureTextEntry={secureTextEntry}
       />
-      <HelperText style={styles.errorInput}>
+      <HelperText style={styles.errorInput} type="error">
         {errors && errors.message}
       </HelperText>
     </View>
   );
 }
 
-export default InputLogin;
+export default memo(InputLogin);

@@ -4,10 +4,13 @@ import { useSelector } from "react-redux";
 import HomeScreen from "../screens/home/HomeScreen";
 import LoginScreen from "../screens/login/LoginScreen";
 
+interface StateProps {
+  auth: { token: any }
+}
 const Stack = createStackNavigator();
 
-function Navigation(props) {
-  const isLogin = useSelector((state) => {
+const Navigation = () => {
+  const isLogin = useSelector((state: StateProps) => {
     return state.auth.token !== "" ? true : false;
   });
   return (
@@ -23,17 +26,17 @@ function Navigation(props) {
           }}
         ></Stack.Screen>
       ) : (
-        <Stack.Screen
-          name="login"
-          component={LoginScreen}
-          options={{
-            title: "Đăng nhập",
-            headerTitleStyle: { textAlign: "center", color: "black" },
-            headerShown: false,
-            headerTransparent: true,
-          }}
-        ></Stack.Screen>
-      )}
+          <Stack.Screen
+            name="login"
+            component={LoginScreen}
+            options={{
+              title: "Đăng nhập",
+              headerTitleStyle: { textAlign: "center", color: "black" },
+              headerShown: false,
+              headerTransparent: true,
+            }}
+          ></Stack.Screen>
+        )}
     </Stack.Navigator>
   );
 }

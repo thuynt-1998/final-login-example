@@ -8,37 +8,42 @@ import {
   Keyboard,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { styles } from "../Home.style";
-import { MaterialIcons } from "@expo/vector-icons";
-import Creators from "../../../action";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useForm } from "react-hook-form";
+
+import { styles } from "../Home.style";
+import Creators from "../../../action";
 import { valid } from "../ToDo.valid";
 
-function ToDo(props) {
-  const toDo = useSelector((state) => {
-    return state.task.toDo;
-  });
+interface ItemProps {
+  id: number;
+  title: string
+}
+interface StateProps {
+  task: { toDo: Array<ItemProps> }
+}
+const ToDo = () => {
+  const toDo = useSelector((state: StateProps) => state.task.toDo);
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(-1);
   const { register, handleSubmit, setValue, reset } = useForm({
     resolver: yupResolver(valid),
   });
   const onSave = useCallback(
-    (data, index, id) => {
+    (data: { task: string }, index: number, id: number) => {
       Keyboard.dismiss();
-      if (id === toDo[index].id)
-        dispatch(Creators.editToDo(index, { id: id, title: data.task }));
+      dispatch(Creators.editToDo(index, { id: id, title: data.task }));
       setSelected(-1);
       reset();
     },
     [toDo]
   );
-  const onEdit = useCallback((index) => {
+  const onEdit = useCallback((index: number) => {
     setSelected(index);
     reset();
   }, []);
-  const onRemove = useCallback((item) => {
+  const onRemove = useCallback((item: ItemProps) => {
     Keyboard.dismiss();
     dispatch(Creators.removeToDo(item));
     setSelected(-1);
@@ -46,6 +51,7 @@ function ToDo(props) {
   useEffect(() => {
     register("task");
   }, [register]);
+  const onValue = useCallback((text: string) => setValue("task", text), [])
   const renderItem = useCallback(
     ({ index, item }) => {
       return (
@@ -58,20 +64,17 @@ function ToDo(props) {
             {selected === index ? (
               <TextInput
                 defaultValue={item.title}
-                name="task"
-                onChangeText={(text) => {
-                  setValue("task", text);
-                }}
+                onChangeText={onValue}
                 autoFocus
                 multiline
               />
             ) : (
-              <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
-            )}
+                <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
+              )}
           </TouchableOpacity>
           {selected === index && (
             <TouchableOpacity
-              onPress={handleSubmit((data) => onSave(data, selected, item.id))}
+              onPress={handleSubmit((data: any) => onSave(data, selected, item.id))}
               style={[styles.flexOne]}
             >
               <MaterialIcons name="edit" size={24} color="black" />

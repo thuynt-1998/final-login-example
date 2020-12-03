@@ -1,21 +1,24 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import {
   Text,
   TouchableOpacity,
   View,
   StatusBar,
-  KeyboardAvoidingView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import Creators from "../../action";
 import { FontAwesome } from "@expo/vector-icons";
+
+import Creators from "../../action";
 import { styles } from "./Home.style";
 import ToDoList from "./components/ToDoList";
 import AddForm from "./components/AddForm";
 
-function HomeScreen(props) {
-  const username = useSelector((state) => {
+interface StateProps {
+  auth: { token: { user: string } }
+}
+const HomeScreen = () => {
+  const username = useSelector((state: StateProps) => {
     return state.auth.token.user ? state.auth.token.user : "";
   });
   const dispatch = useDispatch();

@@ -7,21 +7,30 @@ import {
   Keyboard,
 } from "react-native";
 import { useForm } from "react-hook-form";
-import { styles } from "../Home.style";
-import Creators from "../../../action";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { styles } from "../Home.style";
+import Creators from "../../../action";
 import { valid } from "../ToDo.valid";
-function AddForm(props) {
+
+interface ItemProps {
+  id: number;
+  title: string
+}
+interface StateProps {
+  task: { toDo: Array<ItemProps> }
+}
+const AddForm = () => {
   const { register, handleSubmit, setValue, reset, getValues } = useForm({
     resolver: yupResolver(valid),
   });
-  const idItem = useSelector((state) => {
+  const idItem = useSelector((state: StateProps) => {
     return state.task.toDo;
   });
   const dispatch = useDispatch();
   const onAdd = useCallback(
-    (data) => {
+    (data: { task: string }) => {
       Keyboard.dismiss();
       var id = idItem.length === 0 ? 0 : idItem[idItem.length - 1].id + 1;
       dispatch(Creators.addToDo({ id, title: data.task }));
@@ -29,6 +38,7 @@ function AddForm(props) {
     },
     [idItem]
   );
+  const onValue = useCallback((text: string) => setValue("task", text), []);
   useEffect(() => {
     register("task");
   }, [register]);
@@ -37,8 +47,7 @@ function AddForm(props) {
       <Text style={styles.flexOne}>Task</Text>
       <TextInput
         style={[styles.input, styles.flexThree]}
-        name="task"
-        onChangeText={(text) => setValue("task", text)}
+        onChangeText={onValue}
         value={getValues().task}
         multiline
       />

@@ -7,10 +7,10 @@ const authState = {
   errorMessage: "",
 };
 
-export const loginSuccess = (state = authState, action) => {
+export const loginSuccess = (state = authState, action: { token: any }) => {
   return { errorMessage: "", token: action.token };
 };
-export const loginFailed = (state = authState, action) => {
+export const loginFailed = (state = authState, action: { error: any }) => {
   return { token: "", errorMessage: action.error };
 };
 

@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import api from "../../contants/https-base";
 
-function author(username, password) {
+const author = (username: string, password: string) => {
   return api
     .get(
       `basic-auth/${username}/${password}`,
@@ -12,10 +12,10 @@ function author(username, password) {
     )
     .then((res) => res);
 }
-function removeItem() {
+const removeItem = () => {
   return AsyncStorage.removeItem("token");
 }
-function setItem(token) {
+const setItem = (token: string) => {
   AsyncStorage.setItem("token", JSON.stringify(token));
 }
 

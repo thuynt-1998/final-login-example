@@ -6,7 +6,7 @@ export default function* watcherLoginSaga() {
   yield takeLatest(Types.LOGIN, loginFlow);
 }
 
-function* authorize(username, password) {
+function* authorize(username: string, password: string) {
   const { originalError, data, status } = yield call(
     Api.author,
     username,

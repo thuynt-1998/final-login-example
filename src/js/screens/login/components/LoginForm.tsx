@@ -1,16 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  Keyboard,
-  TextInput as TextInputRender,
-} from "react-native";
+import { Text, View, Keyboard } from "react-native";
 import { useForm } from "react-hook-form";
-import { styles } from "../Login.style";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { valid } from "../LoginForm.valid";
-import { Button, TextInput } from "react-native-paper";
-import InputLogin from "./InputLogin";
+import { Button } from "react-native-paper";
 import {
   Ionicons,
   MaterialCommunityIcons,
@@ -18,23 +10,33 @@ import {
   Zocial,
   Fontisto,
 } from "@expo/vector-icons";
-import { themeLogin, themeFaceBook, themeGoogle } from "../theme";
+import { useDispatch } from "react-redux";
 
-function LoginForm(props) {
+import { styles } from "../Login.style";
+import { valid } from "../LoginForm.valid";
+import InputLogin from "./InputLogin";
+import { themeLogin, themeFaceBook, themeGoogle } from "../theme";
+import Creators from "../../../action";
+
+const LoginForm = () => {
   const { register, handleSubmit, setValue, errors } = useForm({
     resolver: yupResolver(valid),
   });
-  const { onLoginRequest } = props;
   const [isLogin, setIsLogin] = useState(false);
+  const dispatch = useDispatch();
+  const onLoginRequest = useCallback((username: string, password: string) =>
+    dispatch(Creators.loginRequest(username, password)), []
+  );
   useEffect(() => {
     register("username");
     register("password");
   }, [register]);
-  const onClickLogin = useCallback((data) => {
+  const onClickLogin = useCallback((data: { username: string; password: string }) => {
     onLoginRequest(data.username, data.password);
     Keyboard.dismiss();
     setIsLogin(true);
   }, []);
+  const onValue = useCallback((name: string, value: string) => setValue(name, value), []);
   return (
     <View style={[styles.marginContainer, styles.flex1]}>
       <View style={[styles.flex1, styles.flexRow]}>
@@ -43,7 +45,7 @@ function LoginForm(props) {
       <View style={{ flex: 2 }}>
         <InputLogin
           label="username"
-          setValue={setValue}
+          onValue={onValue}
           errors={errors.username}
           title="Email"
           left={() => (
@@ -53,7 +55,7 @@ function LoginForm(props) {
         />
         <InputLogin
           label="password"
-          setValue={setValue}
+          onValue={onValue}
           errors={errors.password}
           title="Password"
           left={() => {
@@ -93,8 +95,7 @@ function LoginForm(props) {
           <Button
             theme={themeLogin}
             uppercase={false}
-            style={styles.fontWeightOne}
-            labelStyle={[styles.labelLink, styles.letterSpacing]}
+            labelStyle={[styles.labelLink, styles.letterSpacing, styles.fontWeightOne]}
           >
             Sign up Now!
           </Button>
