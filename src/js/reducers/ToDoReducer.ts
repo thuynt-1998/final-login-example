@@ -1,7 +1,7 @@
 import { createReducer } from "reduxsauce";
 import { Types } from "../action";
 
-const toDoState = {
+export const toDoState = {
   toDo: [],
 };
 export const addToDo = (state = toDoState, action: { task: any }) => {
@@ -10,7 +10,6 @@ export const addToDo = (state = toDoState, action: { task: any }) => {
   });
 };
 export const editToDo = (state = toDoState, action: { index: number, task: any }) => {
-  console.log(action);
   return Object.assign({}, state, {
     toDo: state.toDo
       .slice(0, action.index)
@@ -18,9 +17,9 @@ export const editToDo = (state = toDoState, action: { index: number, task: any }
       .concat(state.toDo.slice(action.index + 1)),
   });
 };
-export const removeToDo = (state = toDoState, action: { task: any }) => {
+export const removeToDo = (state = toDoState, action: { task: {id:number} }) => {  
   return Object.assign({}, state, {
-    toDo: state.toDo.filter((item) => item !== action.task),
+    toDo: state.toDo.filter((item:{id:number}) => item.id!==action.task.id ),
   });
 };
 

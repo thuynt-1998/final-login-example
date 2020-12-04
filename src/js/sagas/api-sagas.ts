@@ -6,7 +6,7 @@ export default function* watcherLoginSaga() {
   yield takeLatest(Types.LOGIN, loginFlow);
 }
 
-function* authorize(username: string, password: string) {
+export function* authorize(username: string, password: string) {
   const { originalError, data, status } = yield call(
     Api.author,
     username,
@@ -20,11 +20,15 @@ function* authorize(username: string, password: string) {
     return data;
   }
 }
-function* loginFlow() {
+export function* loginFlow() {
   while (true) {
     const { username, password } = yield take(Types.LOGIN_REQUEST);
     const task = yield fork(authorize, username, password);
+    console.log(task);
+    
     const action = yield take([Types.RESET, Types.LOGIN_FAILED]);
+    console.log(action);
+    
     if (action.type === Types.RESET) {
       yield cancel(task);
     }

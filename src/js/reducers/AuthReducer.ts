@@ -2,7 +2,7 @@ import { createReducer, resettableReducer } from "reduxsauce";
 import { Types } from "../action";
 const resettable = resettableReducer("RESET");
 
-const authState = {
+export const authState = {
   token: "",
   errorMessage: "",
 };
