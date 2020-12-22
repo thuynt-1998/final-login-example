@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "601481557941",
+    "project_id": "loginexample-a4f30",
+    "storage_bucket": "loginexample-a4f30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601481557941:android:b66b5ae54eabed66944bfc",
+        "android_client_info": {
+          "package_name": "com.thuyntloginexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601481557941-a04i63gesa1rd3r05a75hmpjaarkbuk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY9vaodjE2plZKDlyYvGGOlXQSpdwZlXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601481557941-a04i63gesa1rd3r05a75hmpjaarkbuk3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
