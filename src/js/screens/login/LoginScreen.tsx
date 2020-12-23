@@ -2,6 +2,8 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { View, StatusBar } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
+import auth from '@react-native-firebase/auth';
+
 
 import Creators from "../../action";
 import LoginForm from "./components/LoginForm";
@@ -12,9 +14,14 @@ const LoginScreen = (props: { navigation: any }) => {
   const onLogin = useCallback(() => dispatch(Creators.login()), []);
   useEffect(() => {
     onLogin();
-
+    // auth().onAuthStateChanged(user => {
+    //   console.log(user);
+    // })
   }, []);
+  const user = auth().currentUser;
+  // console.log("user" + user)
   return (
+    // <View style={styles.flex1}>
     <LinearGradient
       colors={["rgb(29,97,140)", "rgb(42,20,73)"]}
       start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
@@ -26,6 +33,7 @@ const LoginScreen = (props: { navigation: any }) => {
       ></StatusBar>
       <LoginForm navigation={props.navigation} ></LoginForm>
     </LinearGradient>
+    // </View>
   );
 }
 export default LoginScreen;
