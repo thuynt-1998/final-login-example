@@ -11,14 +11,13 @@ import SignupComponent from "./SignupComponent";
 import Creators from "../../../action";
 import { valid } from "../Signup.valid";
 import { Button, Checkbox } from "react-native-paper";
-import { DefaultTheme, useNavigation } from "@react-navigation/native";
+import { DefaultTheme } from "@react-navigation/native";
 import { styles } from "../SignupScreen.style";
 
 const SignUpForm = () => {
   const { register, handleSubmit, setValue, errors, getValues, setError, clearErrors } = useForm({
     resolver: yupResolver(valid),
   });
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const onSignup = useCallback(() => dispatch(Creators.signup()), [])
   useEffect(() => { onSignup() }, [])
@@ -31,8 +30,14 @@ const SignUpForm = () => {
       .createUserWithEmailAndPassword(data.username, data.password)
       .then((res: any) => {
         console.log("res" + res);
-
-        navigation.navigate("login")
+        Alert.alert(
+          "",
+          "Đăng kí thành công",
+          [
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ],
+          { cancelable: false }
+        );
       })
       .catch((error: any) => {
         console.log(error);
