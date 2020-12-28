@@ -14,7 +14,11 @@ import { DefaultTheme, useNavigation } from "@react-navigation/native";
 import { styles } from "../SignupScreen.style";
 
 const SignUpForm = () => {
+<<<<<<< HEAD
   const { handleSubmit, errors, getValues, setError, clearErrors, control } = useForm({
+=======
+  const { register, handleSubmit, setValue, errors, getValues, setError, clearErrors, control } = useForm({
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
     resolver: yupResolver(valid),
     defaultValues: { firstname: "", lastname: "", username: "", password: "", sex: "male", passwordAgain: "", birthday: "" }
   });
@@ -26,6 +30,7 @@ const SignUpForm = () => {
   const [checked, setChecked] = useState(false);
 
   const submit = useCallback((data: any) => {
+<<<<<<< HEAD
     for (let key in data) {
       if (key === "passwordAgain") {
         delete data[key]
@@ -38,13 +43,21 @@ const SignUpForm = () => {
     navigation.navigate("login");
 
   }, [navigation])
+=======
+    onSignupRequest(data);
+  }, [])
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
   const onChangeChecked = useCallback(() => setChecked(!checked), [checked])
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ position: "relative", marginBottom: 50, }}>
 
+<<<<<<< HEAD
         <SignupComponent errors={errors} getValues={getValues} setError={setError} clearErrors={clearErrors} control={control} />
+=======
+        <SignupComponent register={register} setValue={setValue} errors={errors} getValues={getValues} setError={setError} clearErrors={clearErrors} control={control} />
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
         <View style={[styles.radioStyle, styles.marginHorizontal20]}>
           <View style={styles.styleCustom}>
             {

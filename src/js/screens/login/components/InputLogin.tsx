@@ -21,13 +21,20 @@ interface PropsGlobal {
   title: string;
   left: () => React.ReactNode
   secureTextEntry: boolean;
+<<<<<<< HEAD
   value: string;
 
+=======
+  value: string
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 }
 
 const InputLogin = (props: PropsGlobal) => {
   const { label, onValue, errors, title, left, secureTextEntry, value } = props;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 
   return (
     <View style={{ width: "100%" }}>

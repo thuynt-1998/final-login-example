@@ -10,8 +10,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+<<<<<<< HEAD
 import { Controller, useForm } from "react-hook-form";
 import * as yup from 'yup';
+=======
+import { useForm } from "react-hook-form";
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 
 import { styles } from "../Home.style";
 import Creators from "../../../action";

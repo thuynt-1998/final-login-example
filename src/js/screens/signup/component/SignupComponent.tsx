@@ -13,15 +13,33 @@ import InputLogin from '../../login/components/InputLogin';
 import { Controller } from 'react-hook-form';
 interface PropsGlobal {
     errors: any;
+<<<<<<< HEAD
     getValues: Function;
     setError: Function;
     clearErrors: Function;
+=======
+    getValues: (value: any | undefined | null) => any;
+    setError: (data: string, value: any) => any;
+    clearErrors: (data: string) => any;
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
     control: any
 }
 
 const SignupComponent = (props: PropsGlobal) => {
+<<<<<<< HEAD
     const { errors, getValues, setError, clearErrors, control } = props;
     const [birthdayOpen, setOpen] = useState(false);
+=======
+    const { register, setValue, errors, getValues, setError, clearErrors, control } = props;
+    const [radio, setRadio] = useState(false);
+    const [birthdayOpen, setOpen] = useState(false);
+    useEffect(() => { setRadio(!radio); setValue("sex", "male") }, [])
+    useEffect(() => {
+        register("birthday");
+        register("sex")
+    }, [register])
+
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
     const onValueConfirmPassword = useCallback((value: string, onChange: Function) => {
         if (value !== getValues("password")) {
             setError("passwordAgain", { type: "manual", message: "not equal" });
@@ -82,7 +100,11 @@ const SignupComponent = (props: PropsGlobal) => {
                 <Controller
                     control={control}
                     name="username"
+<<<<<<< HEAD
                     render={({ onChange, value, name }) => (<InputLogin
+=======
+                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
                         label={name}
                         value={value}
                         onValue={onChange}
@@ -99,7 +121,11 @@ const SignupComponent = (props: PropsGlobal) => {
                 <Controller
                     control={control}
                     name="password"
+<<<<<<< HEAD
                     render={({ onChange, value, name }) => (<InputLogin
+=======
+                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
                         label={name}
                         value={value}
                         onValue={onChange}
@@ -119,7 +145,11 @@ const SignupComponent = (props: PropsGlobal) => {
                 <Controller
                     control={control}
                     name="passwordAgain"
+<<<<<<< HEAD
                     render={({ onChange, value, name }) => (<InputLogin
+=======
+                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
                         label={name}
                         value={value}
                         onValue={(text) => { onValueConfirmPassword(text, onChange) }}
@@ -137,6 +167,27 @@ const SignupComponent = (props: PropsGlobal) => {
                     )}
                 />
 
+<<<<<<< HEAD
+=======
+
+
+                <View style={styles.containerRadio}>
+                    <TouchableOpacity onPress={onOpen} style={[styles.flex2, styles.containerDatePinker]}>
+
+                        <FontAwesome name="calendar" size={20} color="rgb(179,189,197)" style={{ marginLeft: 15 }} />
+                        <Text style={[styles.flex1, styles.colorWhite, styles.textDate]}>
+                            {getValues("birthday") ? format(new Date(getValues("birthday")), "dd-MM-yyyy") : "Select date"}
+                        </Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal
+                        isVisible={birthdayOpen}
+                        mode="date"
+                        onConfirm={onValueDate}
+                        onCancel={onClose}
+                        date={onDate()}
+                        maximumDate={new Date()}
+                    />
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 
 
                 <Controller

@@ -211,11 +211,19 @@ dependencies {
     }
 
 // firebaseF
+<<<<<<< HEAD
      implementation platform('com.google.firebase:firebase-bom:26.2.0')
 
      implementation 'com.google.firebase:firebase-auth'
 
      implementation 'com.google.android.gms:play-services-auth:19.0.0'
+=======
+    //  implementation platform('com.google.firebase:firebase-bom:26.2.0')
+
+    //  implementation 'com.google.firebase:firebase-auth'
+
+    //  implementation 'com.google.android.gms:play-services-auth:19.0.0'
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 // 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -224,7 +232,10 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+<<<<<<< HEAD
     implementation project(':react-native-push-notification')
+=======
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 
 
 

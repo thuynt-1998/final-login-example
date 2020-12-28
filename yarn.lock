@@ -1209,16 +1209,20 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-10.3.1.tgz#2e9119cb14617c55ee3604598e5fdeb1e4c594f5"
   integrity sha512-JxBsFARyUtp6s37HLOelfaAfwgUMTQZ1xLSRdVFcaPk/Rn2zPTvGsG2frjs5kRAxg+X+4q0NZ0gmfbPDy5ffhg==
 
+<<<<<<< HEAD
 "@react-native-firebase/database@^10.4.1":
   version "10.4.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-10.4.1.tgz#ef6bcf28db149b5deda247f3bf7c838bbdc30542"
   integrity sha512-v2IcNn1eR0y521tKncezfwaEl2RmJuFkO+ke0t/AD3fH8Vr92yRBjYaWin8sZio5mH1dbCy0+TY/4DUVUwVtXg==
 
+=======
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 "@react-native-firebase/dynamic-links@^10.3.1":
   version "10.3.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-10.3.1.tgz#f86c9d983554458a71497510814b10b38d988851"
   integrity sha512-l65Scu74RtpevVDBnHs+cL/7PJfB3twN5Qy85YGZTSyQmhAoAVUB4hi2d5mO+v78xvwU/bwM/q9L1A8jFllpsw==
 
+<<<<<<< HEAD
 "@react-native-firebase/messaging@^10.3.1":
   version "10.3.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-10.3.1.tgz#f764295ccb6fe97747dda097810d6d9c94b6c6c2"
@@ -1229,6 +1233,8 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-10.4.1.tgz#f999656abaab9523b82ac77d12b43076d620ad78"
   integrity sha512-EJm/leacBsNFdMDtglReIvnNNQLl75w4TtOq+DOxPWnMDlBQDVx1DZ2bJjexSQgFZmZG1QBnE6UH9PcriroNxg==
 
+=======
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 "@react-navigation/core@^5.14.4":
   version "5.14.4"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.14.4.tgz#f63a2cd214bddbd25e1181f9335c32dfc3b6460f"

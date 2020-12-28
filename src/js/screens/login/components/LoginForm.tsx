@@ -34,10 +34,19 @@ const LoginForm = (props: { navigation: any }) => {
     }, []
   );
   const onClickLogin = useCallback(({ username, password }: { username: string; password: string }) => {
+<<<<<<< HEAD
     onLoginRequest(username, password, 0);
     Keyboard.dismiss();
     setIsLogin(true);
   }, [onLoginRequest]);
+=======
+    onLoginRequest(username, password);
+
+    Keyboard.dismiss();
+    setIsLogin(true);
+  }, [onLoginRequest]);
+  const onValue = useCallback((name: string, value: string) => setValue(name, value), []);
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
   const onSignup = useCallback(() => props.navigation.push("signup"), [])
   const onLoginGoogle = useCallback(() => {
     onLoginRequest("", "", 2);

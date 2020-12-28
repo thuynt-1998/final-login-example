@@ -19,8 +19,11 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const isLogin = useSelector((state: StateProps) => {
+    console.log(state);
+
     return state.auth.token !== "" ? true : false;
   });
+<<<<<<< HEAD
   const notification = useNotification();
   const dispatch = useDispatch();
 
@@ -30,6 +33,9 @@ const Navigation = () => {
     dispatch(Creators.userRequest())
   }, [])
 
+=======
+  console.log(isLogin);
+>>>>>>> 677cc4f... fix(setup): services- fix service firebase
 
   return (
     <Stack.Navigator >
