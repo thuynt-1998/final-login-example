@@ -16,7 +16,7 @@ const theme = {
 
 interface PropsGlobal {
   label: string;
-  onValue: (label: string, text: string) => any;
+  onValue: (text: string) => any;
   errors: { message: string };
   title: string;
   left: () => React.ReactNode
