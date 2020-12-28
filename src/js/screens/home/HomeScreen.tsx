@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesome } from "react-native-vector-icons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import Creators from "../../action";
 import { styles } from "./Home.style";

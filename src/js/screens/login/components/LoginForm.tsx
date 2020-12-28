@@ -31,18 +31,11 @@ const LoginForm = (props: { navigation: any }) => {
     register("password");
   }, [register]);
   const onClickLogin = useCallback(({ username, password }: { username: string; password: string }) => {
-    // onLoginRequest(data.username, data.password);
-    auth()
-      .signInWithEmailAndPassword(username, password)
-      .then((res: any) => {
-        console.log(res);
-      })
-      .catch((error: any) => {
-        console.log(error);
-      })
+    onLoginRequest(username, password);
+
     Keyboard.dismiss();
     setIsLogin(true);
-  }, []);
+  }, [onLoginRequest]);
   const onValue = useCallback((name: string, value: string) => setValue(name, value), []);
   const onSignup = useCallback(() => props.navigation.push("signup"), [])
   return (

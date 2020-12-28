@@ -12,10 +12,14 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const isLogin = useSelector((state: StateProps) => {
+    console.log(state);
+
     return state.auth.token !== "" ? true : false;
   });
+  console.log(isLogin);
+
   return (
-    <Stack.Navigator initialRouteName="login">
+    <Stack.Navigator >
       {isLogin ? (
         <Stack.Screen
           name="home"

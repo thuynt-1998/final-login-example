@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MaterialIcons } from "react-native-vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useForm } from "react-hook-form";
 
 import { styles } from "../Home.style";

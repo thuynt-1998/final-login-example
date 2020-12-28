@@ -10,6 +10,7 @@ import { format } from 'date-fns'
 
 import { styles } from '../SignupScreen.style';
 import InputLogin from '../../login/components/InputLogin';
+import { Controller } from 'react-hook-form';
 interface PropsGlobal {
     register: any;
     setValue: (name: string, value: string) => any;
@@ -17,33 +18,25 @@ interface PropsGlobal {
     getValues: (value: any | undefined | null) => any;
     setError: (data: string, value: any) => any;
     clearErrors: (data: string) => any;
+    control: any
 }
 
 const SignupComponent = (props: PropsGlobal) => {
-    const { register, setValue, errors, getValues, setError, clearErrors } = props;
+    const { register, setValue, errors, getValues, setError, clearErrors, control } = props;
     const [radio, setRadio] = useState(false);
     const [birthdayOpen, setOpen] = useState(false);
-    useEffect(() => {
-        register("username");
-        register("password");
-        register("passwordAgain");
-        register("firstname")
-        register("lastname");
-        register("sex");
-        register("birthday")
-
-    }, [register]);
     useEffect(() => { setRadio(!radio); setValue("sex", "male") }, [])
-    const onValue = useCallback((name: string, value: string) => {
+    useEffect(() => {
+        register("birthday");
+        register("sex")
+    }, [register])
 
-        setValue(name, value)
-
-    }, []);
-    const onValueConfirmPassword = useCallback((name: string, value: string) => {
+    const onValueConfirmPassword = useCallback((value: string, onChange: Function) => {
         if (value !== getValues("password")) {
             setError("passwordAgain", { type: "manual", message: "not equal" });
         }
-        else { clearErrors("passwordAgain"); setValue("passwordAgain", value) }
+        else { clearErrors("passwordAgain"); }
+        onChange(value)
     }, [])
     const onValueRadio = useCallback((value: string) => { setRadio(!radio); setValue("sex", value) }, [radio])
     const onValueDate = useCallback((value: any) => {
@@ -66,70 +59,101 @@ const SignupComponent = (props: PropsGlobal) => {
             <View style={styles.containerContentForm}>
                 <View style={[styles.containerRow, styles.flex1]}>
                     <View style={styles.widthInput}>
-                        <InputLogin
-                            label="firstname"
-                            onValue={onValue}
-                            errors={errors.firstname}
-                            title="First name"
-                            left={() => null}
-                            secureTextEntry={false}
+                        <Controller
+                            control={control}
+                            name="firstname"
+                            render={({ onChange, onBlur, value, name }) => (<InputLogin
+                                label={name}
+                                value={value}
+                                onValue={onChange}
+                                errors={errors.firstname}
+                                title="First name"
+                                left={() => null}
+                                secureTextEntry={false}
+                            />
+                            )}
                         />
+
                     </View>
                     <View style={styles.widthInput}>
-                        <InputLogin
-                            label="lastname"
-                            onValue={onValue}
-                            errors={errors.lastname}
-                            title="Last name"
-                            left={() => null}
-                            secureTextEntry={false}
+                        <Controller
+                            control={control}
+                            name="lastname"
+                            render={({ onChange, onBlur, value, name }) => (<InputLogin
+                                label={name}
+                                value={value}
+                                onValue={onChange}
+                                errors={errors.lastname}
+                                title="Last name"
+                                left={() => null}
+                                secureTextEntry={false}
+                            />
+                            )}
                         />
+
                     </View>
 
 
                 </View>
-                <InputLogin
-                    label="username"
-                    onValue={onValue}
-                    errors={errors.username}
-                    title="Email"
-                    left={() => (
-                        <Fontisto name="email" size={20} color="rgb(179,189,197)" />
+                <Controller
+                    control={control}
+                    name="username"
+                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+                        label={name}
+                        value={value}
+                        onValue={onChange}
+                        errors={errors.username}
+                        title="Email"
+                        left={() => (
+                            <Fontisto name="email" size={20} color="rgb(179,189,197)" />
+                        )}
+                        secureTextEntry={false}
+                    />
                     )}
-                    secureTextEntry={false}
                 />
-                <InputLogin
-                    label="password"
-                    onValue={onValue}
-                    errors={errors.password}
-                    title="Password"
-                    left={() => {
-                        return (
+
+                <Controller
+                    control={control}
+                    name="password"
+                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+                        label={name}
+                        value={value}
+                        onValue={onChange}
+                        errors={errors.password}
+                        title="Password"
+                        left={() => (
                             <MaterialCommunityIcons
                                 name="shield-lock-outline"
                                 size={20}
                                 color="rgb(179,189,197)"
                             />
-                        );
-                    }}
-                    secureTextEntry={true}
+                        )}
+                        secureTextEntry={true}
+                    />
+                    )}
                 />
-                <InputLogin
-                    label="passwordAgain"
-                    onValue={onValueConfirmPassword}
-                    errors={errors.passwordAgain}
-                    title="Confirm Password"
-                    left={() => {
-                        return (
+                <Controller
+                    control={control}
+                    name="passwordAgain"
+                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+                        label={name}
+                        value={value}
+                        onValue={(text) => { onValueConfirmPassword(text, onChange) }}
+                        errors={errors.passwordAgain}
+                        title="Confirm password"
+                        left={() => (
                             <MaterialCommunityIcons
                                 name="shield-lock-outline"
                                 size={20}
                                 color="rgb(179,189,197)"
                             />
-                        );
-                    }}
-                    secureTextEntry={true}
+                        )}
+                        secureTextEntry={true}
+                    />
+                    )}
                 />
+
+
 
                 <View style={styles.containerRadio}>
                     <TouchableOpacity onPress={onOpen} style={[styles.flex2, styles.containerDatePinker]}>

@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import auth from '@react-native-firebase/auth';
 
 import HeaderForm from "./HeaderForm";
 import SignupComponent from "./SignupComponent";
@@ -15,7 +14,7 @@ import { DefaultTheme } from "@react-navigation/native";
 import { styles } from "../SignupScreen.style";
 
 const SignUpForm = () => {
-  const { register, handleSubmit, setValue, errors, getValues, setError, clearErrors } = useForm({
+  const { register, handleSubmit, setValue, errors, getValues, setError, clearErrors, control } = useForm({
     resolver: yupResolver(valid),
   });
   const dispatch = useDispatch();
@@ -25,35 +24,7 @@ const SignUpForm = () => {
   const [checked, setChecked] = useState(false);
 
   const submit = useCallback((data: any) => {
-    console.log(data);
-    auth()
-      .createUserWithEmailAndPassword(data.username, data.password)
-      .then((res: any) => {
-        console.log("res" + res);
-        Alert.alert(
-          "",
-          "Đăng kí thành công",
-          [
-            { text: "OK", onPress: () => console.log("OK Pressed") }
-          ],
-          { cancelable: false }
-        );
-      })
-      .catch((error: any) => {
-        console.log(error);
-        if (error.code === "auth/email-already-in-use") {
-          Alert.alert(
-            "",
-            "Email này đã tồn tại.",
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ],
-            { cancelable: false }
-          );
-        }
-      })
-
-    // onSignupRequest(data);
+    onSignupRequest(data);
   }, [])
   const onChangeChecked = useCallback(() => setChecked(!checked), [checked])
 
@@ -61,7 +32,7 @@ const SignUpForm = () => {
     <View style={{ flex: 1 }}><HeaderForm />
       <ScrollView style={{ position: "relative", marginBottom: 50 }}>
 
-        <SignupComponent register={register} setValue={setValue} errors={errors} getValues={getValues} setError={setError} clearErrors={clearErrors} />
+        <SignupComponent register={register} setValue={setValue} errors={errors} getValues={getValues} setError={setError} clearErrors={clearErrors} control={control} />
         <View style={[styles.radioStyle, styles.marginHorizontal20]}>
           <View style={styles.styleCustom}>
             {

@@ -5,7 +5,6 @@ import { styles } from '../SignupScreen.style';
 import ButtonUpload from './ButtonUpload';
 
 const HeaderForm = () => {
-
     const [image, setImage] = useState("https://baya.vn/media/wysiwyg/bst-normandy.jpg");
     const [avatar, setAvatar] = useState("https://baya.vn/media/wysiwyg/phong-khach-baya-122020.png");
     const onImage = useCallback((value) => { setImage(value) }, [])

@@ -18,20 +18,14 @@ export default function* watcherLoginSaga() {
 }
 
 export function* authorize(username: string, password: string) {
-  const {originalError, data, status} = yield call(
-    Api.author,
-    username,
-    password,
-  );
-  console.log(data);
-  console.log(originalError);
+  const {user, code} = yield call(Api.author, username, password);
 
-  if (originalError) {
-    yield put(Creators.loginFailed({error: originalError.message, status}));
+  if (code) {
+    yield put(Creators.loginFailed(code));
   } else {
-    yield put(Creators.loginSuccess(data));
-    yield call(Api.setItem, data.authenticated);
-    return data;
+    yield put(Creators.loginSuccess(user.uid));
+    yield call(Api.setItem, user.uid);
+    return user;
   }
 }
 
@@ -39,9 +33,7 @@ export function* loginFlow() {
   while (true) {
     const {username, password} = yield take(Types.LOGIN_REQUEST);
     const task = yield fork(authorize, username, password);
-
     const action = yield take([Types.RESET, Types.LOGIN_FAILED]);
-
     if (action.type === Types.RESET) {
       yield cancel(task);
     }
@@ -52,6 +44,8 @@ export function* loginFlow() {
 function* signupFlow() {
   while (true) {
     const {data} = yield take(Types.SIGNUP_REQUEST);
-    console.log(data);
+    const {code} = yield call(Api.signup, data.username, data.password);
+    console.log(code);
+    return code;
   }
 }
