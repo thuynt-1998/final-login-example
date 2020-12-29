@@ -10,7 +10,7 @@ import SignupComponent from "./SignupComponent";
 import Creators from "../../../action";
 import { valid } from "../Signup.valid";
 import { Button, Checkbox } from "react-native-paper";
-import { DefaultTheme } from "@react-navigation/native";
+import { DefaultTheme, useNavigation } from "@react-navigation/native";
 import { styles } from "../SignupScreen.style";
 
 const SignUpForm = () => {
@@ -18,6 +18,7 @@ const SignUpForm = () => {
     resolver: yupResolver(valid),
     defaultValues: { firstname: "", lastname: "", username: "", password: "", sex: "male", passwordAgain: "", birthday: "" }
   });
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const onSignup = useCallback(() => dispatch(Creators.signup()), [])
   useEffect(() => { onSignup() }, [])
@@ -26,7 +27,9 @@ const SignUpForm = () => {
 
   const submit = useCallback((data: any) => {
     onSignupRequest(data);
-  }, [])
+    navigation.navigate("login");
+
+  }, [navigation])
   const onChangeChecked = useCallback(() => setChecked(!checked), [checked])
 
   return (

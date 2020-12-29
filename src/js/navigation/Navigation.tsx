@@ -15,18 +15,15 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const isLogin = useSelector((state: StateProps) => {
-    console.log(state);
-
     return state.auth.token !== "" ? true : false;
   });
   useEffect(() => {
     const token = auth().onAuthStateChanged(user => {
-      console.log(user);
+      // console.log(user);
     })
-    console.log(token);
+    // console.log(token);
 
   }, [])
-  console.log(isLogin);
 
   return (
     <Stack.Navigator >
@@ -46,7 +43,7 @@ const Navigation = () => {
               name="login"
               component={LoginScreen}
               options={{
-                title: "Đăng nhập",
+                title: "Login",
                 headerTitleStyle: { textAlign: "center", color: "black" },
                 headerShown: false,
                 headerTransparent: true,
