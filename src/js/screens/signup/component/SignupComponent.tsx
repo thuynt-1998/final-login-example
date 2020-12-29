@@ -12,25 +12,16 @@ import { styles } from '../SignupScreen.style';
 import InputLogin from '../../login/components/InputLogin';
 import { Controller } from 'react-hook-form';
 interface PropsGlobal {
-    register: any;
-    setValue: (name: string, value: string) => any;
     errors: any;
-    getValues: (value: any | undefined | null) => any;
-    setError: (data: string, value: any) => any;
-    clearErrors: (data: string) => any;
+    getValues: Function;
+    setError: Function;
+    clearErrors: Function;
     control: any
 }
 
 const SignupComponent = (props: PropsGlobal) => {
-    const { register, setValue, errors, getValues, setError, clearErrors, control } = props;
-    const [radio, setRadio] = useState(false);
+    const { errors, getValues, setError, clearErrors, control } = props;
     const [birthdayOpen, setOpen] = useState(false);
-    useEffect(() => { setRadio(!radio); setValue("sex", "male") }, [])
-    useEffect(() => {
-        register("birthday");
-        register("sex")
-    }, [register])
-
     const onValueConfirmPassword = useCallback((value: string, onChange: Function) => {
         if (value !== getValues("password")) {
             setError("passwordAgain", { type: "manual", message: "not equal" });
@@ -38,20 +29,13 @@ const SignupComponent = (props: PropsGlobal) => {
         else { clearErrors("passwordAgain"); }
         onChange(value)
     }, [])
-    const onValueRadio = useCallback((value: string) => { setRadio(!radio); setValue("sex", value) }, [radio])
-    const onValueDate = useCallback((value: any) => {
-        setValue("birthday", format(value, "yyyy-MM-dd"));
+    const onValueDate = useCallback((value: any, onChange: Function) => {
+        onChange(value);
         onClose()
     }, [])
 
     const onOpen = useCallback(() => { setOpen(true) }, [])
     const onClose = useCallback(() => { setOpen(false) }, [])
-    const onDate = () => {
-        if (getValues("birthday")) {
-            return new Date(getValues("birthday"))
-        }
-        return (new Date())
-    }
 
     return (
 
@@ -98,7 +82,7 @@ const SignupComponent = (props: PropsGlobal) => {
                 <Controller
                     control={control}
                     name="username"
-                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+                    render={({ onChange, value, name }) => (<InputLogin
                         label={name}
                         value={value}
                         onValue={onChange}
@@ -115,7 +99,7 @@ const SignupComponent = (props: PropsGlobal) => {
                 <Controller
                     control={control}
                     name="password"
-                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+                    render={({ onChange, value, name }) => (<InputLogin
                         label={name}
                         value={value}
                         onValue={onChange}
@@ -135,7 +119,7 @@ const SignupComponent = (props: PropsGlobal) => {
                 <Controller
                     control={control}
                     name="passwordAgain"
-                    render={({ onChange, onBlur, value, name }) => (<InputLogin
+                    render={({ onChange, value, name }) => (<InputLogin
                         label={name}
                         value={value}
                         onValue={(text) => { onValueConfirmPassword(text, onChange) }}
@@ -155,55 +139,67 @@ const SignupComponent = (props: PropsGlobal) => {
 
 
 
-                <View style={styles.containerRadio}>
-                    <TouchableOpacity onPress={onOpen} style={[styles.flex2, styles.containerDatePinker]}>
+                <Controller
+                    control={control}
+                    name="birthday"
+                    render={({ onChange, value }) => (<View style={styles.containerRadio}>
+                        <TouchableOpacity onPress={onOpen} style={[styles.flex2, styles.containerDatePinker]}>
 
-                        <FontAwesome name="calendar" size={20} color="rgb(179,189,197)" style={{ marginLeft: 15 }} />
-                        <Text style={[styles.flex1, styles.colorWhite, styles.textDate]}>
-                            {getValues("birthday") ? format(new Date(getValues("birthday")), "dd-MM-yyyy") : "Select date"}
-                        </Text>
-                    </TouchableOpacity>
-                    <DateTimePickerModal
-                        isVisible={birthdayOpen}
-                        mode="date"
-                        onConfirm={onValueDate}
-                        onCancel={onClose}
-                        date={onDate()}
-                        maximumDate={new Date()}
-                    />
+                            <FontAwesome name="calendar" size={20} color="rgb(179,189,197)" style={{ marginLeft: 15 }} />
+                            <Text style={[styles.flex1, styles.colorWhite, styles.textDate]}>
+                                {value ? format(value, "dd-MM-yyyy") : "Select date"}
+                            </Text>
+                        </TouchableOpacity>
 
+                        <DateTimePickerModal
+                            isVisible={birthdayOpen}
+                            mode="date"
+                            onConfirm={(value) => onValueDate(value, onChange)}
+                            onCancel={onClose}
+                            date={value ? value : new Date()}
+                            maximumDate={new Date()}
+                        />
+                    </View>)}
+                />
+                <Controller
+                    control={control}
+                    name="sex"
+                    render={({ onChange, value }) => (
+                        <RadioButton.Group onValueChange={onChange} value={value}  >
+                            <View style={styles.containerRadio}>
+                                <View style={[styles.flex1, styles.styleMale]}>
+                                    {value === "male" ?
+                                        <Fontisto name="male" size={20} color="rgb(179,189,197)" />
+                                        : <Fontisto name="female" size={20} color="rgb(179,189,197)" />}
+                                </View>
+                                <View style={styles.radioStyle}>
+                                    <Text style={styles.colorWhite}>Male</Text>
+                                    <View style={styles.styleCustom}>
+                                        {
+                                            value === "female" && Platform.OS === "ios" &&
+                                            <FontAwesome5 name="circle" size={20} color="rgb(179,189,197)" style={[styles.styleCustomItem, styles.styleCustomItem2]} />
+                                        }
+                                        <RadioButton value="male" color="rgb(179,189,197)" />
 
-                </View>
-                <RadioButton.Group onValueChange={onValueRadio} value={getValues("sex")}  >
-                    <View style={styles.containerRadio}>
-                        <View style={[styles.flex1, styles.styleMale]}>
-                            {getValues("sex") === "male" ?
-                                <Fontisto name="male" size={20} color="rgb(179,189,197)" />
-                                : <Fontisto name="female" size={20} color="rgb(179,189,197)" />}
-                        </View>
-                        <View style={styles.radioStyle}>
-                            <Text style={styles.colorWhite}>Male</Text>
-                            <View style={styles.styleCustom}>
-                                {
-                                    getValues("sex") === "female" && Platform.OS === "ios" &&
-                                    <FontAwesome5 name="circle" size={20} color="rgb(179,189,197)" style={[styles.styleCustomItem, styles.styleCustomItem2]} />
-                                }
-                                <RadioButton value="male" color="rgb(179,189,197)" />
-
+                                    </View>
+                                </View>
+                                <View style={styles.radioStyle}>
+                                    <View style={styles.styleCustom}>
+                                        {
+                                            value === "male" && Platform.OS === "ios" &&
+                                            <FontAwesome5 name="circle" size={20} color="rgb(179,189,197)" style={[styles.styleCustomItem, styles.styleCustomItem2]} />
+                                        }
+                                        <RadioButton value="female" color="rgb(179,189,197)" />
+                                    </View>
+                                    <Text style={styles.colorWhite}>Female</Text>
+                                </View>
                             </View>
-                        </View>
-                        <View style={styles.radioStyle}>
-                            <View style={styles.styleCustom}>
-                                {
-                                    getValues("sex") === "male" && Platform.OS === "ios" &&
-                                    <FontAwesome5 name="circle" size={20} color="rgb(179,189,197)" style={[styles.styleCustomItem, styles.styleCustomItem2]} />
-                                }
-                                <RadioButton value="female" color="rgb(179,189,197)" />
-                            </View>
-                            <Text style={styles.colorWhite}>Female</Text>
-                        </View>
-                    </View>
-                </RadioButton.Group>
+                        </RadioButton.Group>
+
+
+                    )}
+                />
+
                 {errors.sex && <HelperText style={[styles.colorWhite, styles.textAlign]} type="error">{errors.sex.message}</HelperText>}
 
 

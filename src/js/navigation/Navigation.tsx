@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
+import auth from '@react-native-firebase/auth';
+
+
 import HomeScreen from "../screens/home/HomeScreen";
 import LoginScreen from "../screens/login/LoginScreen";
 import SignupScreen from "../screens/signup/SignupScreen";
@@ -16,6 +19,13 @@ const Navigation = () => {
 
     return state.auth.token !== "" ? true : false;
   });
+  useEffect(() => {
+    const token = auth().onAuthStateChanged(user => {
+      console.log(user);
+    })
+    console.log(token);
+
+  }, [])
   console.log(isLogin);
 
   return (

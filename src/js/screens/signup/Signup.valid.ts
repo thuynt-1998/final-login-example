@@ -13,4 +13,5 @@ export const valid = yup.object().shape({
   firstname: yup.string().required('firstname is not empty'),
   lastname: yup.string().required('lastname is not empty'),
   sex: yup.string().required('sex is not empty'),
+  birthday: yup.string().required('Birthday is not empty'),
 });

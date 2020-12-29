@@ -1,10 +1,10 @@
-import { createActions } from "reduxsauce";
+import {createActions} from 'reduxsauce';
 
 interface ActionsCreators {
-  loginRequest: (username: string, password: string) => any;
+  loginRequest: (username: string, password: string, number: number) => any;
   login: () => any;
   reset: () => any;
-  loginSuccess: (token: any) => any;
+  loginSuccess: (token: any, number: number) => any;
   loginFailed: (error: any) => any;
   addToDo: (task: any) => any;
   editToDo: (index: number, task: any) => any;
@@ -25,19 +25,17 @@ interface ActionsTypes {
   SIGNUP_REQUEST: string;
   SIGNUP: string;
 }
-export const { Types, Creators } = createActions<ActionsTypes, ActionsCreators>(
-  {
-    loginRequest: ["username", "password"],
-    login: null,
-    reset: null,
-    loginSuccess: ["token"],
-    loginFailed: ["error"],
-    addToDo: ["task"],
-    editToDo: ["index", "task"],
-    removeToDo: ["task"],
-    signupRequest: ["data"],
-    signup: null,
-  }
-);
+export const {Types, Creators} = createActions<ActionsTypes, ActionsCreators>({
+  loginRequest: ['username', 'password', 'number'],
+  login: null,
+  reset: null,
+  loginSuccess: ['token', 'number'],
+  loginFailed: ['error'],
+  addToDo: ['task'],
+  editToDo: ['index', 'task'],
+  removeToDo: ['task'],
+  signupRequest: ['data'],
+  signup: null,
+});
 
 export default Creators;

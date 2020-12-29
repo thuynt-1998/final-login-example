@@ -14,8 +14,9 @@ import { DefaultTheme } from "@react-navigation/native";
 import { styles } from "../SignupScreen.style";
 
 const SignUpForm = () => {
-  const { register, handleSubmit, setValue, errors, getValues, setError, clearErrors, control } = useForm({
+  const { handleSubmit, errors, getValues, setError, clearErrors, control } = useForm({
     resolver: yupResolver(valid),
+    defaultValues: { firstname: "", lastname: "", username: "", password: "", sex: "male", passwordAgain: "", birthday: "" }
   });
   const dispatch = useDispatch();
   const onSignup = useCallback(() => dispatch(Creators.signup()), [])
@@ -32,7 +33,7 @@ const SignUpForm = () => {
     <View style={{ flex: 1 }}><HeaderForm />
       <ScrollView style={{ position: "relative", marginBottom: 50 }}>
 
-        <SignupComponent register={register} setValue={setValue} errors={errors} getValues={getValues} setError={setError} clearErrors={clearErrors} control={control} />
+        <SignupComponent errors={errors} getValues={getValues} setError={setError} clearErrors={clearErrors} control={control} />
         <View style={[styles.radioStyle, styles.marginHorizontal20]}>
           <View style={styles.styleCustom}>
             {

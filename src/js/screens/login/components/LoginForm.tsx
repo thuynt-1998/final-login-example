@@ -8,8 +8,7 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Zocial from "react-native-vector-icons/Zocial";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import { useDispatch } from "react-redux";
-import auth from '@react-native-firebase/auth';
-
+import { Controller } from 'react-hook-form';
 
 import { styles } from "../Login.style";
 import { valid } from "../LoginForm.valid";
@@ -18,57 +17,71 @@ import { themeLogin, themeFaceBook, themeGoogle } from "../theme";
 import Creators from "../../../action";
 
 const LoginForm = (props: { navigation: any }) => {
-  const { register, handleSubmit, setValue, errors } = useForm({
+  const { handleSubmit, errors, control } = useForm({
     resolver: yupResolver(valid),
+    defaultValues: { username: "", password: "", }
   });
   const [isLogin, setIsLogin] = useState(false);
   const dispatch = useDispatch();
-  const onLoginRequest = useCallback((username: string, password: string) =>
-    dispatch(Creators.loginRequest(username, password)), []
+  const onLoginRequest = useCallback(
+    (username: string, password: string, type: number) => {
+      dispatch(Creators.loginRequest(username, password, type));
+    }, []
   );
-  useEffect(() => {
-    register("username");
-    register("password");
-  }, [register]);
   const onClickLogin = useCallback(({ username, password }: { username: string; password: string }) => {
-    onLoginRequest(username, password);
-
+    onLoginRequest(username, password, 0);
     Keyboard.dismiss();
     setIsLogin(true);
   }, [onLoginRequest]);
-  const onValue = useCallback((name: string, value: string) => setValue(name, value), []);
   const onSignup = useCallback(() => props.navigation.push("signup"), [])
+  const onLoginGoogle = useCallback(() => {
+    onLoginRequest("", "", 2);
+  }, [])
+  const onLoginFacebook = useCallback(() => {
+    onLoginRequest("", "", 1);
+  }, [])
   return (
     <View style={[styles.marginContainer, styles.flex1]}>
       <View style={[styles.flex1, styles.flexRow]}>
         <Text style={[styles.logo]}>digitm</Text>
       </View>
       <View style={{ flex: 2 }}>
-        <InputLogin
-          label="username"
-          onValue={onValue}
-          errors={errors.username}
-          title="Email"
-          left={() => (
-            <Fontisto name="email" size={20} color="rgb(179,189,197)" />
+        <Controller
+          control={control}
+          name="username"
+          render={({ onChange, onBlur, value, name }) => (<InputLogin
+            label={name}
+            value={value}
+            onValue={onChange}
+            errors={errors.username}
+            title="Email"
+            left={() => (
+              <Fontisto name="email" size={20} color="rgb(179,189,197)" />
+            )}
+            secureTextEntry={false}
+          />
           )}
-          secureTextEntry={false}
         />
-        <InputLogin
-          label="password"
-          onValue={onValue}
-          errors={errors.password}
-          title="Password"
-          left={() => {
-            return (
+
+        <Controller
+          control={control}
+          name="password"
+          render={({ onChange, onBlur, value, name }) => (<InputLogin
+            label={name}
+            value={value}
+            onValue={onChange}
+            errors={errors.password}
+            title="Password"
+            left={() => (
               <MaterialCommunityIcons
                 name="shield-lock-outline"
                 size={20}
                 color="rgb(179,189,197)"
               />
-            );
-          }}
-          secureTextEntry={true}
+            )}
+            secureTextEntry={true}
+          />
+          )}
         />
         <Button
           mode="contained"
@@ -120,6 +133,7 @@ const LoginForm = (props: { navigation: any }) => {
             )}
             uppercase={false}
             labelStyle={[styles.marginLeft5, styles.letterSpacing]}
+            onPress={onLoginFacebook}
           >
             Facebook
           </Button>
@@ -130,9 +144,11 @@ const LoginForm = (props: { navigation: any }) => {
             icon={() => <Zocial name="google" size={20} color="white" />}
             uppercase={false}
             labelStyle={[styles.marginLeft5, styles.letterSpacing]}
+            onPress={onLoginGoogle}
           >
             Google
           </Button>
+
         </View>
       </View>
     </View>

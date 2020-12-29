@@ -1,17 +1,19 @@
-import { createReducer, resettableReducer } from "reduxsauce";
-import { Types } from "../action";
-const resettable = resettableReducer("RESET");
+import {createReducer, resettableReducer} from 'reduxsauce';
+import {Types} from '../action';
+const resettable = resettableReducer('RESET');
 
 export const authState = {
-  token: "",
-  errorMessage: "",
+  token: '',
+  type: 0,
+  errorMessage: '',
 };
 
-export const loginSuccess = (state = authState, action: { token: any }) => {
-  return { errorMessage: "", token: action.token };
+export const loginSuccess = (state = authState, action: any) => {
+  console.log(action);
+  return {errorMessage: '', token: action.token, type: action.number};
 };
-export const loginFailed = (state = authState, action: { error: any }) => {
-  return { token: "", errorMessage: action.error };
+export const loginFailed = (state = authState, action: {error: any}) => {
+  return {token: '', type: 0, errorMessage: action.error};
 };
 
 const HANDLERS = {

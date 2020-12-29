@@ -82,15 +82,20 @@ export const styles = StyleSheet.create({
   marginHorizontal20: {marginHorizontal: 50, marginBottom: 40},
 
   styleCustomItem2: {position: 'absolute', left: '22%', top: '20%'},
-  containerButton: {position: 'absolute', bottom: 0, flex: 1, width: '100%'},
+  containerButton: {
+    position: 'absolute',
+    bottom: 0,
+    flex: 1,
+    width: '100%',
+    height: 70,
+    backgroundColor: 'rgba(42,20,73,1)',
+  },
   styleButton: {
     height: 50,
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'rgb(179,189,197)',
     marginHorizontal: 20,
-    marginVertical: 20,
-    backgroundColor: 'rgb(42,20,73)',
   },
   styleMale: {marginLeft: 15},
 });

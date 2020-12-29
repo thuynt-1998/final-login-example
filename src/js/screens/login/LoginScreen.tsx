@@ -3,7 +3,11 @@ import { useDispatch } from "react-redux";
 import { View, StatusBar } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import auth from '@react-native-firebase/auth';
-
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from 'react-native-google-signin';
 
 import Creators from "../../action";
 import LoginForm from "./components/LoginForm";
@@ -14,9 +18,13 @@ const LoginScreen = (props: { navigation: any }) => {
   const onLogin = useCallback(() => dispatch(Creators.login()), []);
   useEffect(() => {
     onLogin();
-    // auth().onAuthStateChanged(user => {
-    //   console.log(user);
-    // })
+    GoogleSignin.configure({
+      scopes: ['email'],
+      webClientId:
+        '601481557941-a04i63gesa1rd3r05a75hmpjaarkbuk3.apps.googleusercontent.com',
+      offlineAccess: true,
+    });
+
   }, []);
   const user = auth().currentUser;
   // console.log("user" + user)
