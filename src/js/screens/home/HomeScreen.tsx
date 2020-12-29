@@ -26,7 +26,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      <StatusBar backgroundColor="rgb(99,177,28)" translucent></StatusBar>
+      <StatusBar backgroundColor="rgb(19,97,140)" translucent></StatusBar>
       <View>
         <View
           style={[
