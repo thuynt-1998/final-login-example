@@ -17,7 +17,7 @@ const theme = {
 interface PropsGlobal {
   label: string;
   onValue: (text: string) => any;
-  errors: { message: string };
+  errors: any;
   title: string;
   left: () => React.ReactNode
   secureTextEntry: boolean;

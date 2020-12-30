@@ -5,8 +5,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import auth from '@react-native-firebase/auth';
 import {
   GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
 } from 'react-native-google-signin';
 
 import Creators from "../../action";
@@ -26,6 +24,8 @@ const LoginScreen = (props: { navigation: any }) => {
     });
 
   }, []);
+
+  
   const user = auth().currentUser;
   // console.log("user" + user)
   return (

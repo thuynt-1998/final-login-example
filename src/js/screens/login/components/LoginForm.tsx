@@ -7,8 +7,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Zocial from "react-native-vector-icons/Zocial";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { Controller } from 'react-hook-form';
+import PushNotification from "react-native-push-notification";
 
 import { styles } from "../Login.style";
 import { valid } from "../LoginForm.valid";
@@ -40,10 +42,37 @@ const LoginForm = (props: { navigation: any }) => {
   const onLoginFacebook = useCallback(() => {
     onLoginRequest("", "", 1);
   }, [])
+  PushNotification.configure({
+    onRegister: function (token) {
+      console.log("TOKEN:", token);
+    },
+    onNotification: function (notification) {
+      console.log("NOTIFICATION:", notification);
+    },
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+  });
+  const sendMessage = () => {
+    PushNotification.localNotification({
+      title: "My Notification Title",
+      message: "My Notification Message",
+    });
+  }
+  // PushNotification.localNotificationSchedule({
+  //   message: "My Notification Message", // (required)
+  //   date: new Date(Date.now() + (6 * 1000)) // in 60 secs
+  // });
+
   return (
     <View style={[styles.marginContainer, styles.flex1]}>
       <View style={[styles.flex1, styles.flexRow]}>
         <Text style={[styles.logo]}>digitm</Text>
+        <Button onPress={sendMessage}> <FontAwesome name="bell-o" size={20} color="white" /></Button>
       </View>
       <View style={{ flex: 2 }}>
         <Controller
