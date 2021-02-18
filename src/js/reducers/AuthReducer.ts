@@ -6,6 +6,7 @@ export const authState = {
   token: '',
   type: 0,
   errorMessage: '',
+  // user:""
 };
 
 export const loginSuccess = (state = authState, action: any) => {

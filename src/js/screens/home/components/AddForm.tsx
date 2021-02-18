@@ -6,14 +6,18 @@ import {
   TextInput,
   Keyboard,
 } from "react-native";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from 'yup';
 
 import { styles } from "../Home.style";
 import Creators from "../../../action";
-import { valid } from "../ToDo.valid";
+import TodoServices from "../../../sevices/api/TodoServices";
 
+const valid = yup.object().shape({
+  title: yup.string().required('Task is not empty'),
+});
 interface ItemProps {
   id: number;
   title: string
@@ -22,35 +26,43 @@ interface StateProps {
   task: { toDo: Array<ItemProps> }
 }
 const AddForm = () => {
-  const { register, handleSubmit, setValue, reset, getValues } = useForm({
+  const { handleSubmit, reset, control } = useForm({
     resolver: yupResolver(valid),
+    defaultValues: { title: "" }
   });
   const idItem = useSelector((state: StateProps) => {
     return state.task.toDo;
   });
   const dispatch = useDispatch();
   const onAdd = useCallback(
-    (data: { task: string }) => {
+    (data: { title: string }) => {
       Keyboard.dismiss();
       var id = idItem.length === 0 ? 0 : idItem[idItem.length - 1].id + 1;
-      dispatch(Creators.addToDo({ id, title: data.task }));
+
+      TodoServices.addTodo(id, { id, title: data.title })
+      dispatch(Creators.todoRequest())
       reset();
     },
-    [idItem]
+    [idItem, dispatch]
   );
-  const onValue = useCallback((text: string) => setValue("task", text), []);
-  useEffect(() => {
-    register("task");
-  }, [register]);
+
   return (
     <View style={[styles.flexRow, styles.paddingOne, styles.containerTop]}>
       <Text style={styles.flexOne}>Task</Text>
-      <TextInput
-        style={[styles.input, styles.flexThree]}
-        onChangeText={onValue}
-        value={getValues().task}
-        multiline
+      <Controller
+        name="title"
+        control={control}
+        render={({ onChange, value }) => (
+          <TextInput
+            style={[styles.input, styles.flexThree]}
+            onChangeText={onChange}
+            value={value}
+            multiline
+          />
+        )}
+
       />
+
       <TouchableOpacity
         style={[styles.buttonLogout, styles.marginOne, styles.flexOne]}
         onPress={handleSubmit(onAdd)}

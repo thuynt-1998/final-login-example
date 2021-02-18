@@ -13,14 +13,13 @@ import Creators from "../../action";
 import { styles } from "./Home.style";
 import ToDoList from "./components/ToDoList";
 import AddForm from "./components/AddForm";
+import { useNavigation } from "@react-navigation/native";
 
 interface StateProps {
   auth: { token: { user: string } }
 }
 const HomeScreen = () => {
-  const username = useSelector((state: StateProps) => {
-    return state.auth.token.user ? state.auth.token.user : "";
-  });
+
   const dispatch = useDispatch();
   const onLogout = useCallback(() => dispatch(Creators.reset()), []);
 
@@ -36,10 +35,10 @@ const HomeScreen = () => {
             styles.backgroundColor,
           ]}
         >
-          <View style={[styles.flexRow, styles.flexOne]}>
+          <TouchableOpacity style={[styles.flexRow, styles.flexOne]} >
+
             <FontAwesome name="user-circle-o" size={34} color="white" />
-            <Text style={styles.textUser}> {username}</Text>
-          </View>
+          </TouchableOpacity>
           <View>
             <TouchableOpacity onPress={onLogout} style={styles.buttonLogout}>
               <Text style={styles.textButtonLogout}> Logout</Text>

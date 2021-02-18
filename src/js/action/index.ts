@@ -6,9 +6,10 @@ interface ActionsCreators {
   reset: () => any;
   loginSuccess: (token: any, number: number) => any;
   loginFailed: (error: any) => any;
+  todoRequest: () => any;
   addToDo: (task: any) => any;
-  editToDo: (index: number, task: any) => any;
-  removeToDo: (task: any) => any;
+  userRequest: ()=> any;
+  addUser: (user: any) => any;
   signupRequest: (data: any) => any;
   signup: () => any;
 }
@@ -19,9 +20,10 @@ interface ActionsTypes {
   RESET: string;
   LOGIN_SUCCESS: string;
   LOGIN_FAILED: string;
+  TODO_REQUEST: string;
   ADD_TO_DO: string;
-  EDIT_TO_DO: string;
-  REMOVE_TO_DO: string;
+  USER_REQUEST: string;
+  ADD_USER: string;
   SIGNUP_REQUEST: string;
   SIGNUP: string;
 }
@@ -31,9 +33,10 @@ export const {Types, Creators} = createActions<ActionsTypes, ActionsCreators>({
   reset: null,
   loginSuccess: ['token', 'number'],
   loginFailed: ['error'],
+  todoRequest: null,
   addToDo: ['task'],
-  editToDo: ['index', 'task'],
-  removeToDo: ['task'],
+  userRequest: null,
+  addUser: ['user'],
   signupRequest: ['data'],
   signup: null,
 });

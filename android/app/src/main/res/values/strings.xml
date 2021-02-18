@@ -2,4 +2,10 @@
     <string name="app_name">thuyntloginexample</string>
     <string name="facebook_app_id">690255935183848</string>
     <string name="fb_login_protocol_scheme">fb690255935183848</string>
+    <string name="default_notification_channel_id" translatable="false">
+    fcm_notification_channel
+    </string> 
+     <string name="default_notification_channel_id_firebase" translatable="false">
+    fcm_fallback_notification_channel
+    </string> 
 </resources>

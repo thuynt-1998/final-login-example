@@ -21,11 +21,13 @@ interface PropsGlobal {
   title: string;
   left: () => React.ReactNode
   secureTextEntry: boolean;
-  value: string
+  value: string;
+
 }
 
 const InputLogin = (props: PropsGlobal) => {
   const { label, onValue, errors, title, left, secureTextEntry, value } = props;
+
 
   return (
     <View style={{ width: "100%" }}>

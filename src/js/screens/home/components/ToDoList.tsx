@@ -10,11 +10,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from 'yup';
 
 import { styles } from "../Home.style";
 import Creators from "../../../action";
-import { valid } from "../ToDo.valid";
+import TodoServices from "../../../sevices/api/TodoServices";
 
 interface ItemProps {
   id: number;
@@ -23,17 +24,24 @@ interface ItemProps {
 interface StateProps {
   task: { toDo: Array<ItemProps> }
 }
+
+const valid = yup.object().shape({
+  title: yup.string().required('Task is not empty'),
+});
 const ToDo = () => {
   const toDo = useSelector((state: StateProps) => state.task.toDo);
+
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(-1);
-  const { register, handleSubmit, setValue, reset } = useForm({
+  const { handleSubmit, reset, control } = useForm({
     resolver: yupResolver(valid),
+    defaultValues: { title: "" }
   });
   const onSave = useCallback(
-    (data: { task: string }, index: number, id: number) => {
+    (data: { title: string }, index: number) => {
       Keyboard.dismiss();
-      dispatch(Creators.editToDo(index, { id: id, title: data.task }));
+      TodoServices.updateTodo(index, data)
+      dispatch(Creators.todoRequest())
       setSelected(-1);
       reset();
     },
@@ -43,38 +51,43 @@ const ToDo = () => {
     setSelected(index);
     reset();
   }, []);
-  const onRemove = useCallback((item: ItemProps) => {
-    Keyboard.dismiss();
-    dispatch(Creators.removeToDo(item));
+  const onRemove = useCallback((index: number) => {
+    TodoServices.remove(index)
+    dispatch(Creators.todoRequest())
     setSelected(-1);
-  }, []);
-  useEffect(() => {
-    register("task");
-  }, [register]);
-  const onValue = useCallback((text: string) => setValue("task", text), [])
+  }, [toDo, dispatch]);
+
   const renderItem = useCallback(
     ({ index, item }) => {
       return (
         <View style={[styles.flexRow, styles.paddingTwo]}>
           <Text style={styles.flexOne}>{index}</Text>
           <TouchableOpacity
-            onPress={() => onEdit(index)}
+            onPress={() => onEdit(item.id)}
             style={[styles.flexTwo]}
           >
             {selected === index ? (
-              <TextInput
-                defaultValue={item.title}
-                onChangeText={onValue}
-                autoFocus
-                multiline
+              <Controller
+                name="title"
+                control={control}
+
+                render={({ onChange, value }) => (
+                  <TextInput
+                    defaultValue={item.title}
+                    onChangeText={onChange}
+                    autoFocus
+                    multiline
+                  />
+                )}
               />
+
             ) : (
                 <Text style={[styles.flexTwo, styles.color]}>{item.title}</Text>
               )}
           </TouchableOpacity>
           {selected === index && (
             <TouchableOpacity
-              onPress={handleSubmit((data: any) => onSave(data, selected, item.id))}
+              onPress={handleSubmit((data: any) => onSave(data, selected))}
               style={[styles.flexOne]}
             >
               <MaterialIcons name="edit" size={24} color="black" />
@@ -83,19 +96,19 @@ const ToDo = () => {
 
           <TouchableOpacity
             style={[styles.flexOne]}
-            onPress={() => onRemove(item)}
+            onPress={() => onRemove(item.id)}
           >
             <MaterialIcons name="delete" size={20} color="black" />
           </TouchableOpacity>
         </View>
       );
     },
-    [selected]
+    [selected, toDo]
   );
   return (
     <FlatList
       data={toDo}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item: any) => item.id.toString()}
       renderItem={renderItem}
       style={styles.paddingOne}
       extraData={selected}

@@ -1,32 +1,21 @@
-import { createReducer } from "reduxsauce";
-import { Types } from "../action";
+import {createReducer} from 'reduxsauce';
+import action, {Types} from '../action';
 
 export const toDoState = {
   toDo: [],
+  user: null,
 };
-export const addToDo = (state = toDoState, action: { task: any }) => {
+export const addToDo = (state = toDoState, action: {task: any}) => {
   return Object.assign({}, state, {
-    toDo: state.toDo.concat(action.task),
+    toDo: action.task,
   });
 };
-export const editToDo = (state = toDoState, action: { index: number, task: any }) => {
-  return Object.assign({}, state, {
-    toDo: state.toDo
-      .slice(0, action.index)
-      .concat(action.task)
-      .concat(state.toDo.slice(action.index + 1)),
-  });
+export const addUser = (state = toDoState, action: {user: any}) => {
+  return {...state, user: action.user};
 };
-export const removeToDo = (state = toDoState, action: { task: {id:number} }) => {  
-  return Object.assign({}, state, {
-    toDo: state.toDo.filter((item:{id:number}) => item.id!==action.task.id ),
-  });
-};
-
 const HANDLERS = {
   [Types.ADD_TO_DO]: addToDo,
-  [Types.EDIT_TO_DO]: editToDo,
-  [Types.REMOVE_TO_DO]: removeToDo,
+  [Types.ADD_USER]: addUser,
 };
 
 export default createReducer(toDoState, HANDLERS);

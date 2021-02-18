@@ -18,6 +18,8 @@ target 'thuyntloginexample' do
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
+  pod 'RNFBMessaging', :path => '../node_modules/@react-native-firebase/messaging'
+
   target 'thuyntloginexampleTests' do
     inherit! :complete
     # Pods for testing

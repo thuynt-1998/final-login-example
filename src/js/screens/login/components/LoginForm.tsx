@@ -17,8 +17,11 @@ import { valid } from "../LoginForm.valid";
 import InputLogin from "./InputLogin";
 import { themeLogin, themeFaceBook, themeGoogle } from "../theme";
 import Creators from "../../../action";
+import useNotification from "../../../notification/useNotification";
 
 const LoginForm = (props: { navigation: any }) => {
+  const notification = useNotification();
+
   const { handleSubmit, errors, control } = useForm({
     resolver: yupResolver(valid),
     defaultValues: { username: "", password: "", }
@@ -42,37 +45,12 @@ const LoginForm = (props: { navigation: any }) => {
   const onLoginFacebook = useCallback(() => {
     onLoginRequest("", "", 1);
   }, [])
-  PushNotification.configure({
-    onRegister: function (token) {
-      console.log("TOKEN:", token);
-    },
-    onNotification: function (notification) {
-      console.log("NOTIFICATION:", notification);
-    },
-    permissions: {
-      alert: true,
-      badge: true,
-      sound: true,
-    },
-    popInitialNotification: true,
-    requestPermissions: true,
-  });
-  const sendMessage = () => {
-    PushNotification.localNotification({
-      title: "My Notification Title",
-      message: "My Notification Message",
-    });
-  }
-  // PushNotification.localNotificationSchedule({
-  //   message: "My Notification Message", // (required)
-  //   date: new Date(Date.now() + (6 * 1000)) // in 60 secs
-  // });
 
   return (
     <View style={[styles.marginContainer, styles.flex1]}>
       <View style={[styles.flex1, styles.flexRow]}>
         <Text style={[styles.logo]}>digitm</Text>
-        <Button onPress={sendMessage}> <FontAwesome name="bell-o" size={20} color="white" /></Button>
+        <Button onPress={notification.sendMessage}> <FontAwesome name="bell-o" size={20} color="white" /></Button>
       </View>
       <View style={{ flex: 2 }}>
         <Controller

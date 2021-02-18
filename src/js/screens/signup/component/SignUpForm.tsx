@@ -26,6 +26,14 @@ const SignUpForm = () => {
   const [checked, setChecked] = useState(false);
 
   const submit = useCallback((data: any) => {
+    for (let key in data) {
+      if (key === "passwordAgain") {
+        delete data[key]
+      }
+      if (key === "birthday") {
+        data[key] = JSON.stringify(data[key])
+      }
+    }
     onSignupRequest(data);
     navigation.navigate("login");
 
@@ -33,8 +41,8 @@ const SignUpForm = () => {
   const onChangeChecked = useCallback(() => setChecked(!checked), [checked])
 
   return (
-    <View style={{ flex: 1 }}><HeaderForm />
-      <ScrollView style={{ position: "relative", marginBottom: 50 }}>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ position: "relative", marginBottom: 50, }}>
 
         <SignupComponent errors={errors} getValues={getValues} setError={setError} clearErrors={clearErrors} control={control} />
         <View style={[styles.radioStyle, styles.marginHorizontal20]}>
@@ -52,10 +60,12 @@ const SignUpForm = () => {
           </View>
           <Text style={[styles.colorWhite, styles.flex1]}> Agree to the terms of use </Text>
         </View>
+
       </ScrollView>
       <View style={styles.containerButton}>
-        <Button mode="contained"
-          theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, primary: "rgb(19, 97, 140)", disabled: "ưhite" } }}
+        <Button
+          mode="contained"
+          theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, primary: "rgb(19, 97, 140)", disabled: "white" } }}
           onPress={handleSubmit(submit)}
           disabled={!checked}
           style={styles.styleButton}

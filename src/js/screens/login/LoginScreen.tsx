@@ -27,9 +27,7 @@ const LoginScreen = (props: { navigation: any }) => {
 
   
   const user = auth().currentUser;
-  // console.log("user" + user)
   return (
-    // <View style={styles.flex1}>
     <LinearGradient
       colors={["rgb(29,97,140)", "rgb(42,20,73)"]}
       start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
@@ -41,7 +39,6 @@ const LoginScreen = (props: { navigation: any }) => {
       ></StatusBar>
       <LoginForm navigation={props.navigation} ></LoginForm>
     </LinearGradient>
-    // </View>
   );
 }
 export default LoginScreen;

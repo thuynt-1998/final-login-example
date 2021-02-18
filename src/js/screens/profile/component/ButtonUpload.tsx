@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { launchImageLibrary } from 'react-native-image-picker';
-
-// import { styles } from '../SignupScreen.style';
+import storage from '@react-native-firebase/storage';
+import { utils } from '@react-native-firebase/app';
 
 const ButtonUpload = ({ onValue, name }: { onValue: (value: any) => void; name: string }) => {
     const pickImage = () => {
@@ -14,7 +14,14 @@ const ButtonUpload = ({ onValue, name }: { onValue: (value: any) => void; name: 
         };
         launchImageLibrary(options, (res: any) => {
             if (!res.didCancel) {
-                onValue(res.uri);
+                storage().ref(res.uri.split("/").pop()).putFile(res.uri, {
+                    contentType: 'image/jpeg',
+                }).on("state_changed", resp => {
+                    onValue(res.uri.split("/").pop());
+                }, error => {
+                    console.log("er" + error);
+                })
+
             }
         })
 

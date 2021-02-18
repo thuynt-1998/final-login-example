@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import auth from '@react-native-firebase/auth';
 
 
 import HomeScreen from "../screens/home/HomeScreen";
 import LoginScreen from "../screens/login/LoginScreen";
 import SignupScreen from "../screens/signup/SignupScreen";
+import useNotification from "../notification/useNotification";
+import Creators from "../action";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+import DrawerNavigation from "./DrawerNavigation";
 
 interface StateProps {
   auth: { token: any }
@@ -17,26 +21,32 @@ const Navigation = () => {
   const isLogin = useSelector((state: StateProps) => {
     return state.auth.token !== "" ? true : false;
   });
-  useEffect(() => {
-    const token = auth().onAuthStateChanged(user => {
-      // console.log(user);
-    })
-    // console.log(token);
+  const notification = useNotification();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    (() => { notification.init(); notification.sendMessage() })();
+    dispatch(Creators.todoRequest())
+    dispatch(Creators.userRequest())
   }, [])
+
 
   return (
     <Stack.Navigator >
       {isLogin ? (
-        <Stack.Screen
-          name="home"
-          component={HomeScreen}
-          options={{
-            title: "Trang chủ",
-            headerShown: false,
-            headerTransparent: true,
-          }}
-        ></Stack.Screen>
+        <>
+          <Stack.Screen
+            name="home"
+            component={DrawerNavigation}
+            options={{
+              title: "Trang chủ",
+              headerShown: false,
+              headerTransparent: true,
+            }}
+          ></Stack.Screen>
+
+        </>
+
       ) : (
           <>
             <Stack.Screen

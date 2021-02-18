@@ -1,42 +1,29 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { Platform, TouchableOpacity, View } from 'react-native';
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { HelperText, RadioButton, Text } from 'react-native-paper';
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns'
 
-import { styles } from '../SignupScreen.style';
+import { styles } from '../ProfileScreen.style';
 import InputLogin from '../../login/components/InputLogin';
 import { Controller } from 'react-hook-form';
 interface PropsGlobal {
     errors: any;
-    getValues: Function;
-    setError: Function;
-    clearErrors: Function;
     control: any
 }
 
-const SignupComponent = (props: PropsGlobal) => {
-    const { errors, getValues, setError, clearErrors, control } = props;
+const ProfileComponent = (props: PropsGlobal) => {
+    const { errors, control } = props;
     const [birthdayOpen, setOpen] = useState(false);
-    const onValueConfirmPassword = useCallback((value: string, onChange: Function) => {
-        if (value !== getValues("password")) {
-            setError("passwordAgain", { type: "manual", message: "not equal" });
-        }
-        else { clearErrors("passwordAgain"); }
-        onChange(value)
-    }, [])
     const onValueDate = useCallback((value: any, onChange: Function) => {
         onChange(value);
         onClose()
     }, [])
-
     const onOpen = useCallback(() => { setOpen(true) }, [])
     const onClose = useCallback(() => { setOpen(false) }, [])
-
     return (
 
         <View style={[styles.flex1]}>
@@ -96,70 +83,33 @@ const SignupComponent = (props: PropsGlobal) => {
                     )}
                 />
 
-                <Controller
-                    control={control}
-                    name="password"
-                    render={({ onChange, value, name }) => (<InputLogin
-                        label={name}
-                        value={value}
-                        onValue={onChange}
-                        errors={errors.password}
-                        title="Password"
-                        left={() => (
-                            <MaterialCommunityIcons
-                                name="shield-lock-outline"
-                                size={20}
-                                color="rgb(179,189,197)"
-                            />
-                        )}
-                        secureTextEntry={true}
-                    />
-                    )}
-                />
-                <Controller
-                    control={control}
-                    name="passwordAgain"
-                    render={({ onChange, value, name }) => (<InputLogin
-                        label={name}
-                        value={value}
-                        onValue={(text) => { onValueConfirmPassword(text, onChange) }}
-                        errors={errors.passwordAgain}
-                        title="Confirm password"
-                        left={() => (
-                            <MaterialCommunityIcons
-                                name="shield-lock-outline"
-                                size={20}
-                                color="rgb(179,189,197)"
-                            />
-                        )}
-                        secureTextEntry={true}
-                    />
-                    )}
-                />
-
 
 
                 <Controller
                     control={control}
                     name="birthday"
-                    render={({ onChange, value }) => (<View style={styles.containerRadio}>
-                        <TouchableOpacity onPress={onOpen} style={[styles.flex2, styles.containerDatePinker]}>
+                    render={({ onChange, value }) => {
+                        console.log(value);
 
-                            <FontAwesome name="calendar" size={20} color="rgb(179,189,197)" style={{ marginLeft: 15 }} />
-                            <Text style={[styles.flex1, styles.colorWhite, styles.textDate]}>
-                                {value ? format(value, "dd-MM-yyyy") : "Select date"}
-                            </Text>
-                        </TouchableOpacity>
+                        return (<View style={styles.containerRadio}>
+                            <TouchableOpacity onPress={onOpen} style={[styles.flex2, styles.containerDatePinker]}>
 
-                        <DateTimePickerModal
-                            isVisible={birthdayOpen}
-                            mode="date"
-                            onConfirm={(value) => onValueDate(value, onChange)}
-                            onCancel={onClose}
-                            date={value ? value : new Date()}
-                            maximumDate={new Date()}
-                        />
-                    </View>)}
+                                <FontAwesome name="calendar" size={20} color="rgb(179,189,197)" style={{ marginLeft: 15 }} />
+                                <Text style={[styles.flex1, styles.colorWhite, styles.textDate]}>
+                                    {value ? format(value, "dd-MM-yyyy") : "Select date"}
+                                </Text>
+                            </TouchableOpacity>
+
+                            <DateTimePickerModal
+                                isVisible={birthdayOpen}
+                                mode="date"
+                                onConfirm={(value) => onValueDate(value, onChange)}
+                                onCancel={onClose}
+                                date={value ? value : new Date()}
+                                maximumDate={new Date()}
+                            />
+                        </View>)
+                    }}
                 />
                 <Controller
                     control={control}
@@ -196,7 +146,6 @@ const SignupComponent = (props: PropsGlobal) => {
                             </View>
                         </RadioButton.Group>
 
-
                     )}
                 />
 
@@ -213,4 +162,4 @@ const SignupComponent = (props: PropsGlobal) => {
     );
 }
 
-export default memo(SignupComponent);
+export default memo(ProfileComponent);
