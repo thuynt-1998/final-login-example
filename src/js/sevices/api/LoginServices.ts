@@ -1,13 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
-<<<<<<< HEAD
 import {GoogleSignin} from 'react-native-google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import database from '@react-native-firebase/database';
-=======
-
-import api from '../../contants/https-base';
->>>>>>> 677cc4f... fix(setup): services- fix service firebase
 
 import api from '../../contants/https-base';
 
@@ -77,19 +72,7 @@ const logoutDefault = async () => {
   await auth().signOut();
 };
 const author = (username: string, password: string) => {
-<<<<<<< HEAD
-=======
-  // return api
-  //   .get(
-  //     `basic-auth/${username}/${password}`,
-  //     {},
-  //     {
-  //       auth: {username, password},
-  //     },
-  //   )
-  //   .then((res) => res);
->>>>>>> 677cc4f... fix(setup): services- fix service firebase
-  return auth()
+ return auth()
     .signInWithEmailAndPassword(username, password)
     .then((res: any) => {
       return res;
@@ -104,7 +87,6 @@ const removeItem = () => {
 const setItem = (token: string) => {
   AsyncStorage.setItem('token', JSON.stringify(token));
 };
-<<<<<<< HEAD
 const getItem = () => {
   return AsyncStorage.getItem('token');
 };
@@ -117,22 +99,10 @@ const signup = (data) => {
         .set(data)
         .then((res) => {
           return res;
-        });
-=======
-const signup = (username, password) => {
-  return auth()
-    .createUserWithEmailAndPassword(username, password)
-    .then((res: any) => {
-      console.log('res' + res);
->>>>>>> 677cc4f... fix(setup): services- fix service firebase
-      return res;
-    })
-    .catch((error: any) => {
-      return error;
-    });
+        })})
+    
 };
 
-<<<<<<< HEAD
 export default {
   author,
   removeItem,
@@ -145,6 +115,3 @@ export default {
   logoutFacebook,
   getItem,
 };
-=======
-export default {author, removeItem, setItem, signup};
->>>>>>> 677cc4f... fix(setup): services- fix service firebase
